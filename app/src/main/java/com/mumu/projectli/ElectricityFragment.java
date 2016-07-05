@@ -8,6 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -25,9 +33,14 @@ public class ElectricityFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private List<ElectricityRecordParser.Entry> mHistoryList;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView mLastTimeTextView, mLastRecordTextView, mCurrentTimeTextView, mCurrentRecordTextView;
+    private ListView mHistoryListView;
+    private LayoutInflater mInflater;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,6 +81,7 @@ public class ElectricityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG,"onCreateView");
+        mInflater = inflater;
         return inflater.inflate(R.layout.fragment_electricity, container, false);
     }
 
@@ -97,11 +111,38 @@ public class ElectricityFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        prepareView();
+        prepareView(view);
+        prepareData();
+        applyDataToViews();
     }
 
-    private void prepareView() {
+    private void prepareView(View view) {
+        mLastTimeTextView = (TextView) view.findViewById(R.id.textViewLastTime);
+        mLastRecordTextView = (TextView) view.findViewById(R.id.textViewLastRecord);
+        mCurrentTimeTextView = (TextView) view.findViewById(R.id.textViewCurrentTime);
+        mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewCurrentRecord);
 
+        mHistoryListView = (ListView) view.findViewById(R.id.listViewElectricHistory);
+    }
+
+    private void prepareData() {
+        InputStream in = getResources().openRawResource(R.raw.electricity_sample);
+        try {
+            mHistoryList = new ElectricityRecordParser().parse(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "Parsing XML file failed. Fetching xml to developer.");
+            return;
+        }
+        Log.d(TAG, "xml data:");
+        for (ElectricityRecordParser.Entry entry: mHistoryList) {
+            Log.d(TAG, "  " + entry.toString());
+        }
+    }
+
+    private void applyDataToViews() {
+        ElectricityHistoryAdapter adapter = new ElectricityHistoryAdapter(mInflater, mHistoryList);
+        mHistoryListView.setAdapter(adapter);
     }
 
     /**

@@ -26,7 +26,7 @@
     <string name="electric_current_record">最新讀值</string>
 
     <string name="electric_history">歷史用電</string>
-    <string name="electric_button_add">新增資料</string>
+    <string name="electric_button_add">新增資料(Test Only)</string>
 
     <!-- home activity -->
     <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
