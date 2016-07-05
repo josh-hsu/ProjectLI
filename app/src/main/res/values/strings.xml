@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- drawer strings -->
-    <string name="drawer_title">李小華</string>
+    <string name="drawer_title">User Name</string>
     <string name="drawer_subtitle">WeiHua Li</string>
 
     <!-- drawer menu -->
@@ -20,6 +20,17 @@
 
     <!-- home activity -->
     <string name="home_title">Sorry, this is preview App. This page is no ready yet.</string>
+    <string name="home_welcome">So sorry, there is nothing in home page.</string>
+    
+    <!-- Electricity activity -->
+    <string name="electric_today">Today\'s Electricity</string>
+    <string name="electric_last_record_time">Last Time</string>
+    <string name="electric_last_record">Last Record</string>
+    <string name="electric_current_record_time">Now</string>
+    <string name="electric_current_record">Record</string>
+
+    <string name="electric_history">Electricity History</string>
+    <string name="electric_button_add">Add Electricity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

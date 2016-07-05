@@ -18,6 +18,17 @@
     <string name="drawer_send">寄信給開發者(許朝翔)</string>
     <string name="drawer_share">分享給 ... </string>
 
+    <!-- Electricity activity -->
+    <string name="electric_today">今日報表</string>
+    <string name="electric_last_record_time">上次登入</string>
+    <string name="electric_last_record">上次讀值</string>
+    <string name="electric_current_record_time">最新登入</string>
+    <string name="electric_current_record">最新讀值</string>
+
+    <string name="electric_history">歷史用電</string>
+    <string name="electric_button_add">新增資料</string>
+
     <!-- home activity -->
     <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
+    <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
 </resources>

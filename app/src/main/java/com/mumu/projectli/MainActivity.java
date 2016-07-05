@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Snackbar.make(this.findViewById(android.R.id.content), getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
     @Override
