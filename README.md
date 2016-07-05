@@ -1,5 +1,9 @@
 # 李小華筆記本
+這裡會放 Beta 版的 APK 檔案，請用手機下載直接安裝即可
 
-* 這裡會放 Beta 版的 APK 檔案，請用手機下載直接安裝即可
-** Beta Version: 0.1a
-** Download: https://github.com/josh-hsu/ProjectLI/blob/0c9eadef09743492fada21251c403ccc59446eb0/beta_release/app-debug.apk?raw=true
+##測試版本
+
+* 版本: 0.1A
+* 敬告: 本版本僅供李小華使用
+* 下載: https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/app-debug.apk?raw=true
+
