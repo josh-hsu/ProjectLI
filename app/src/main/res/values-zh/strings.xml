@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">李小華記錄本</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">設定</string>
+
+    <!-- drawer strings -->
+    <string name="drawer_title">李小華</string>
+    <string name="drawer_subtitle">WeiHua Li</string>
+
+    <!-- drawer menu -->
+    <string name="drawer_money">記帳</string>
+    <string name="drawer_electricity">電表</string>
+    <string name="drawer_body_weight">體重</string>
+    <string name="drawer_menu_social">社群</string>
+    <string name="drawer_send">寄信給開發者(許朝翔)</string>
+    <string name="drawer_share">分享給 ... </string>
+
+    <!-- home activity -->
+    <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
+</resources>

@@ -5,4 +5,22 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- drawer strings -->
+    <string name="drawer_title">李小華</string>
+    <string name="drawer_subtitle">WeiHua Li</string>
+
+    <!-- drawer menu -->
+    <string name="drawer_money">Accounting</string>
+    <string name="drawer_electricity">Electricity</string>
+    <string name="drawer_body_weight">Body Weight</string>
+    <string name="drawer_menu_social">Social</string>
+    <string name="drawer_send">Send Mail to developer</string>
+    <string name="drawer_share">Share to ..</string>
+
+    <!-- home activity -->
+    <string name="home_title">Sorry, this is preview App. This page is no ready yet.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
