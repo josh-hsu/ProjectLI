@@ -15,11 +15,11 @@
     <string name="drawer_electricity">電表</string>
     <string name="drawer_body_weight">體重</string>
     <string name="drawer_menu_social">社群</string>
-    <string name="drawer_send">寄信給開發者(許朝翔)</string>
+    <string name="drawer_send">寄信抱怨一下</string>
     <string name="drawer_share">分享給 ... </string>
 
     <!-- Electricity activity -->
-    <string name="electric_today">今日報表</string>
+    <string name="electric_today">今日概覽 - 您今天已完成紀錄</string>
     <string name="electric_last_record_time">上次登入</string>
     <string name="electric_last_record">上次讀值</string>
     <string name="electric_current_record_time">最新登入</string>

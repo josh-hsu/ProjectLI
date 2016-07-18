@@ -1,13 +1,17 @@
 package layout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mumu.projectli.MainActivity;
+import com.mumu.projectli.MainFragment;
 import com.mumu.projectli.R;
 
 /**
@@ -18,9 +22,10 @@ import com.mumu.projectli.R;
  * Use the {@link MoneyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MoneyFragment extends Fragment {
+public class MoneyFragment extends MainFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "MoneyFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -90,6 +95,16 @@ public class MoneyFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFabClick(View view) {
+        Log.d(TAG, "Fab click from money");
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            final MainActivity deskClockActivity = (MainActivity) activity;
+            deskClockActivity.showSnackBarMessage("這裡都這麼空了，你還想加什麼");
+        }
     }
 
     /**

@@ -17,12 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import layout.MoneyFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MoneyFragment.OnFragmentInteractionListener,
         ElectricityFragment.OnFragmentInteractionListener {
+
+    FloatingActionButton mFab;
+    List<MainFragment> mFragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +37,17 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mFragmentList = new ArrayList<>();
+        try {
+            mFragmentList.add(ElectricityFragment.class.newInstance());
+            mFragmentList.add(MoneyFragment.class.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,36 +99,35 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
-
-
+        final MainFragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         int id = item.getItemId();
 
         if (id == R.id.nav_money) {
-            fragmentClass = MoneyFragment.class;
+            fragment = mFragmentList.get(1);
         } else if (id == R.id.nav_electricity) {
-            fragmentClass = ElectricityFragment.class;
+            fragment = mFragmentList.get(0);
         } else if (id == R.id.nav_bodyweight) {
-            fragmentClass = MoneyFragment.class;
+            fragment = mFragmentList.get(1);
         } else if (id == R.id.nav_share) {
-            fragmentClass = MoneyFragment.class;
+            fragment = mFragmentList.get(1);
         } else if (id == R.id.nav_send) {
-            fragmentClass = MoneyFragment.class;
+            fragment = mFragmentList.get(1);
         } else {
-            fragmentClass = MoneyFragment.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+            fragment = mFragmentList.get(1);
         }
 
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        // Setting onClickListener
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.onFabClick(view);
+            }
+        });
 
         // Dismiss drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,5 +139,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
         Toast.makeText(this,"Hello from the activity", Toast.LENGTH_SHORT).show();
+    }
+
+    public FloatingActionButton getFab() {
+        return mFab;
+    }
+
+    public void showSnackBarMessage(String msg) {
+        Snackbar.make(this.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 }

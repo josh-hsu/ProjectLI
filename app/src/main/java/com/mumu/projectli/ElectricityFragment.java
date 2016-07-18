@@ -1,8 +1,13 @@
 package com.mumu.projectli;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +20,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -26,7 +32,7 @@ import java.util.List;
  * Use the {@link ElectricityFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ElectricityFragment extends Fragment {
+public class ElectricityFragment extends MainFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "ProjectLI";
@@ -38,11 +44,15 @@ public class ElectricityFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private TextView mLastTimeTextView, mLastRecordTextView, mCurrentTimeTextView, mCurrentRecordTextView;
+    private FloatingActionButton mFab;
+    private TextView mTodayElectricityTextView;
+    private TextView mLastTextView, mLastRecordTextView, mCurrentTextView, mCurrentRecordTextView;
     private ListView mHistoryListView;
     private LayoutInflater mInflater;
 
     private OnFragmentInteractionListener mListener;
+    private Typeface mAndroidClockMonoThin;
+    private Typeface mAlphabetFace;
 
     public ElectricityFragment() {
         // Required empty public constructor
@@ -85,6 +95,27 @@ public class ElectricityFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_electricity, container, false);
     }
 
+    @Override
+    public void setFabAppearance() {
+        if (mFab == null) {
+            return;
+        }
+
+        mFab.setImageResource(R.drawable.ic_menu_gallery);
+        mFab.setContentDescription("Description from electricity");
+        mFab.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onFabClick(View view) {
+        Log.d(TAG, "Fab click from electricity");
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            final MainActivity deskClockActivity = (MainActivity) activity;
+            deskClockActivity.showSnackBarMessage("New record is not implemented");
+        }
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -113,16 +144,29 @@ public class ElectricityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         prepareView(view);
         prepareData();
-        applyDataToViews();
+        //applyDataToViews();
     }
 
     private void prepareView(View view) {
-        mLastTimeTextView = (TextView) view.findViewById(R.id.textViewLastTime);
-        mLastRecordTextView = (TextView) view.findViewById(R.id.textViewLastRecord);
-        mCurrentTimeTextView = (TextView) view.findViewById(R.id.textViewCurrentTime);
-        mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewCurrentRecord);
+        mTodayElectricityTextView = (TextView) view.findViewById(R.id.textViewTodayElectricity);
+        //mHistoryListView = (ListView) view.findViewById(R.id.listViewElectricHistory);
+        mLastRecordTextView = (TextView) view.findViewById(R.id.textViewElectricLastRecord);
+        mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewElectricTodayRecord);
+        mLastTextView = (TextView) view.findViewById(R.id.textViewElectricLast);
+        mCurrentTextView = (TextView) view.findViewById(R.id.textViewElectricToday);
 
-        mHistoryListView = (ListView) view.findViewById(R.id.listViewElectricHistory);
+        mAndroidClockMonoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AndroidClockMono-Thin.ttf");
+        mAlphabetFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
+        mLastRecordTextView.setTypeface(mAndroidClockMonoThin);
+        mLastRecordTextView.setTextSize(75);
+        mCurrentRecordTextView.setTypeface(mAndroidClockMonoThin);
+        mCurrentRecordTextView.setTextSize(75);
+        mLastTextView.setTextSize(40);
+        mLastTextView.setTypeface(mAlphabetFace);
+        mLastTextView.setTextColor(Color.BLACK);
+        mCurrentTextView.setTextSize(40);
+        mCurrentTextView.setTypeface(mAlphabetFace);
+        mCurrentTextView.setTextColor(Color.BLACK);
     }
 
     private void prepareData() {
