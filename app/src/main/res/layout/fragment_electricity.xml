@@ -31,7 +31,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/textViewTodayElectricity">
+            android:layout_below="@+id/textViewTodayElectricity"
+            android:layout_alignParentBottom="true">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -79,6 +80,7 @@
                     android:layout_weight="0.7"/>
             </TableRow>
         </TableLayout>
+
     </RelativeLayout>
 
 
