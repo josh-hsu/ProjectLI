@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:textSize="18dp"
         android:text="@string/electric_today"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
@@ -73,7 +73,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:textSize="18dp"
         android:text="@string/electric_history"
         android:id="@+id/textView3"
         android:layout_below="@+id/num_txt"
