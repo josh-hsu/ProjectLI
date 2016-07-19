@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity
         ElectricityFragment.OnFragmentInteractionListener {
 
     FloatingActionButton mFab;
+    View mCoordinateLayoutView;
     List<MainFragment> mFragmentList;
 
     @Override
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Save the coordinate layout view for animated elements
+        mCoordinateLayoutView = findViewById(R.id.coordinator_layout);
 
         // construct fragment list
         mFragmentList = new ArrayList<>();
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Snackbar.make(this.findViewById(android.R.id.content), getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
+        Snackbar.make(mCoordinateLayoutView, getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
@@ -152,7 +157,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showSnackBarMessage(String msg) {
-        Snackbar.make(this.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
+        Snackbar.make(mCoordinateLayoutView, msg, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 }

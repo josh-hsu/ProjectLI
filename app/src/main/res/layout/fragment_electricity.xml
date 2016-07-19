@@ -23,7 +23,7 @@
         android:layout_width="260dp"
         android:layout_height="260dp"
 
-        android:background="@drawable/bg_red"
+        android:background="@drawable/bg_blue_circle"
         android:gravity="center"
         android:text=""
         android:textColor="#FFFFFF"
