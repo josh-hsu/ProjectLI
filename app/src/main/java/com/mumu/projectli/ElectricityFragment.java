@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,9 +46,8 @@ public class ElectricityFragment extends MainFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FloatingActionButton mFab;
     private TextView mTodayElectricityTextView;
-    private TextView mLastTextView, mLastRecordTextView, mCurrentTextView, mCurrentRecordTextView;
+    private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView;
     private ListView mHistoryListView;
     private LayoutInflater mInflater;
 
@@ -58,14 +59,6 @@ public class ElectricityFragment extends MainFragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ElectricityFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ElectricityFragment newInstance(String param1, String param2) {
         ElectricityFragment fragment = new ElectricityFragment();
@@ -83,7 +76,7 @@ public class ElectricityFragment extends MainFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Log.d(TAG,"onCreate");
+        Log.d(TAG,"onCreate with params " + mParam1 + ", " + mParam2);
     }
 
     @Override
@@ -96,12 +89,18 @@ public class ElectricityFragment extends MainFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setFabAppearance();
+    }
+
+    @Override
     public void setFabAppearance() {
         if (mFab == null) {
             return;
         }
-
-        mFab.setImageResource(R.drawable.ic_menu_gallery);
+        Log.d(TAG, "set fab appearance");
+        mFab.setImageResource(R.drawable.ic_menu_add);
         mFab.setContentDescription("Description from electricity");
         mFab.setVisibility(View.VISIBLE);
     }
@@ -148,25 +147,19 @@ public class ElectricityFragment extends MainFragment {
     }
 
     private void prepareView(View view) {
-        mTodayElectricityTextView = (TextView) view.findViewById(R.id.textViewTodayElectricity);
+        //mTodayElectricityTextView = (TextView) view.findViewById(R.id.textViewTodayElectricity);
         //mHistoryListView = (ListView) view.findViewById(R.id.listViewElectricHistory);
         mLastRecordTextView = (TextView) view.findViewById(R.id.textViewElectricLastRecord);
         mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewElectricTodayRecord);
-        mLastTextView = (TextView) view.findViewById(R.id.textViewElectricLast);
-        mCurrentTextView = (TextView) view.findViewById(R.id.textViewElectricToday);
+        mCurrentRecordDiffTextView = (TextView) view.findViewById(R.id.textViewElectricRecordDiff);
 
         mAndroidClockMonoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AndroidClockMono-Thin.ttf");
         mAlphabetFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
         mLastRecordTextView.setTypeface(mAndroidClockMonoThin);
-        mLastRecordTextView.setTextSize(75);
         mCurrentRecordTextView.setTypeface(mAndroidClockMonoThin);
-        mCurrentRecordTextView.setTextSize(75);
-        mLastTextView.setTextSize(40);
-        mLastTextView.setTypeface(mAlphabetFace);
-        mLastTextView.setTextColor(Color.BLACK);
-        mCurrentTextView.setTextSize(40);
-        mCurrentTextView.setTypeface(mAlphabetFace);
-        mCurrentTextView.setTextColor(Color.BLACK);
+        mCurrentRecordDiffTextView.setTypeface(mAndroidClockMonoThin);
+
+        animateTextView(0, 44, mCurrentRecordDiffTextView);
     }
 
     private void prepareData() {
@@ -202,5 +195,23 @@ public class ElectricityFragment extends MainFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void animateTextView(int initialValue, int finalValue, final TextView textview) {
+        DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator(0.8f);
+        int start = Math.min(initialValue, finalValue);
+        int end = Math.max(initialValue, finalValue);
+        int difference = Math.abs(finalValue - initialValue);
+        Handler handler = new Handler();
+        for (int count = start; count <= end; count++) {
+            int time = Math.round(decelerateInterpolator.getInterpolation((((float) count) / difference)) * 30) * count;
+            final int finalCount = ((initialValue > finalValue) ? initialValue - count : count);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    textview.setText("+" + finalCount);
+                }
+            }, time);
+        }
     }
 }

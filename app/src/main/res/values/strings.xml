@@ -23,13 +23,13 @@
     <string name="home_welcome">So sorry, there is nothing in home page.</string>
     
     <!-- Electricity activity -->
-    <string name="electric_today">Today\'s Electricity</string>
+    <string name="electric_today">Today</string>
     <string name="electric_last_record_time">Last Time</string>
     <string name="electric_last_record">Last Record</string>
     <string name="electric_current_record_time">Now</string>
     <string name="electric_current_record">Record</string>
 
-    <string name="electric_history">Electricity History</string>
+    <string name="electric_history">History</string>
     <string name="electric_button_add">Add Electricity</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -21,13 +21,12 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final Activity activity = getActivity();
-        Log.d(TAG, "MainFragment created.");
-        if (activity instanceof MainActivity) {
-            final MainActivity deskClockActivity = (MainActivity) activity;
-            mFab = deskClockActivity.getFab();
-            /*mLeftButton = deskClockActivity.getLeftButton();
-            mRightButton = deskClockActivity.getRightButton();*/
+        MainActivity activity = getMainActivity();
+
+        if (activity != null) {
+            mFab = activity.getFab();
+        } else {
+            Log.e(TAG, "WTF, Cannot get MainActivity from MainFragment!");
         }
     }
 
@@ -35,7 +34,13 @@ public class MainFragment extends Fragment {
         // Do nothing here , only in derived classes
     }
 
-    protected final MainActivity getDeskClock() {
-        return (MainActivity) getActivity();
+    protected MainActivity getMainActivity() {
+        final Activity activity = getActivity();
+        Log.d(TAG, "MainFragment onActivityCreated building link");
+        if (activity instanceof MainActivity) {
+            return (MainActivity) activity;
+        }
+
+        return null;
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">李小華記錄本</string>
+    <string name="app_name">每日記錄</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,8 +7,8 @@
     <string name="action_settings">設定</string>
 
     <!-- drawer strings -->
-    <string name="drawer_title">李小華</string>
-    <string name="drawer_subtitle">WeiHua Li</string>
+    <string name="drawer_title">李偉華</string>
+    <string name="drawer_subtitle">Bar</string>
 
     <!-- drawer menu -->
     <string name="drawer_money">記帳</string>
@@ -19,7 +19,7 @@
     <string name="drawer_share">分享給 ... </string>
 
     <!-- Electricity activity -->
-    <string name="electric_today">今日概覽 - 您今天已完成紀錄</string>
+    <string name="electric_today">今日概覽</string>
     <string name="electric_last_record_time">上次登入</string>
     <string name="electric_last_record">上次讀值</string>
     <string name="electric_current_record_time">最新登入</string>
