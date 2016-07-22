@@ -18,11 +18,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.echo.holographlibrary.Line;
+import com.echo.holographlibrary.LineGraph;
+import com.echo.holographlibrary.LinePoint;
+
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,6 +54,7 @@ public class ElectricityFragment extends MainFragment {
     private TextView mTodayElectricityTextView;
     private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView;
     private ListView mHistoryListView;
+    private LineGraph mLineGraph;
     private LayoutInflater mInflater;
 
     private OnFragmentInteractionListener mListener;
@@ -145,6 +151,7 @@ public class ElectricityFragment extends MainFragment {
         mLastRecordTextView = (TextView) view.findViewById(R.id.textViewElectricLastRecord);
         mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewElectricTodayRecord);
         mCurrentRecordDiffTextView = (TextView) view.findViewById(R.id.textViewElectricRecordDiff);
+        mLineGraph = (LineGraph)view.findViewById(R.id.graphElectricity);
 
         mAndroidClockMonoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AndroidClockMono-Thin.ttf");
         mAlphabetFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
@@ -153,6 +160,7 @@ public class ElectricityFragment extends MainFragment {
         mCurrentRecordDiffTextView.setTypeface(mAndroidClockMonoThin);
 
         animateTextView(0, 44, mCurrentRecordDiffTextView);
+        drawFakeChart();
     }
 
     private void prepareData() {
@@ -206,5 +214,20 @@ public class ElectricityFragment extends MainFragment {
                 }
             }, time);
         }
+    }
+
+    private void drawFakeChart() {
+        Line l = new Line();
+        for (int i = 0; i < 10; i ++) {
+            LinePoint p = new LinePoint();
+            p.setX(i);
+            p.setY(i > 5 ? 10 - i : i + 10);
+            l.addPoint(p);
+        }
+        l.setColor(Color.parseColor("#FFBB33"));
+
+        mLineGraph.addLine(l);
+        mLineGraph.setRangeY(-5, 22);
+        //mLineGraph.setLineToFill(0);
     }
 }

@@ -27,6 +27,7 @@
 
     <string name="electric_history">歷史用電</string>
     <string name="electric_button_add">新增資料(Test Only)</string>
+    <string name="electric_graph_not_ready">圖表資料尚未更新\n點圖看詳細用電</string>
 
     <!-- home activity -->
     <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
