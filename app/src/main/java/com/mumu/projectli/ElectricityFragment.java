@@ -53,6 +53,7 @@ public class ElectricityFragment extends MainFragment {
     private String mParam2;
     private TextView mTodayElectricityTextView;
     private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView;
+    private TextView mLinGraphTextView;
     private ListView mHistoryListView;
     private LineGraph mLineGraph;
     private LayoutInflater mInflater;
@@ -151,7 +152,16 @@ public class ElectricityFragment extends MainFragment {
         mLastRecordTextView = (TextView) view.findViewById(R.id.textViewElectricLastRecord);
         mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewElectricTodayRecord);
         mCurrentRecordDiffTextView = (TextView) view.findViewById(R.id.textViewElectricRecordDiff);
+
+        mLinGraphTextView = (TextView) view.findViewById(R.id.textViewGraphNotReady);
         mLineGraph = (LineGraph)view.findViewById(R.id.graphElectricity);
+
+        mLinGraphTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "TOUCH");
+            }
+        });
 
         mAndroidClockMonoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AndroidClockMono-Thin.ttf");
         mAlphabetFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
