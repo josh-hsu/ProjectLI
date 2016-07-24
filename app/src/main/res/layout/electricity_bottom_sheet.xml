@@ -5,8 +5,7 @@
     android:id="@+id/electricity_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@drawable/side_nav_bar">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,8 +17,7 @@
             android:layout_height="80dp"
             android:layout_gravity="bottom|end"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@mipmap/ic_drawer_image"
-            android:layout_weight="0.65"
+            android:src="@mipmap/ic_josh_image"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -27,11 +25,10 @@
             android:id="@+id/recyclerViewElectricityList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/imageViewTopHead"/>
-
+            android:layout_below="@+id/imageViewTopHead"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"/>
 
     </RelativeLayout>
-
-
-
 </android.support.design.widget.CoordinatorLayout>
