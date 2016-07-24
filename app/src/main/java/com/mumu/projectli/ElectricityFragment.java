@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +57,7 @@ public class ElectricityFragment extends MainFragment {
     private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView;
     private TextView mLinGraphTextView;
     private ListView mHistoryListView;
+
     private LineGraph mLineGraph;
     private LayoutInflater mInflater;
 
@@ -160,6 +163,7 @@ public class ElectricityFragment extends MainFragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "TOUCH");
+                showBottomSheet();
             }
         });
 
@@ -239,5 +243,10 @@ public class ElectricityFragment extends MainFragment {
         mLineGraph.addLine(l);
         mLineGraph.setRangeY(-5, 22);
         //mLineGraph.setLineToFill(0);
+    }
+
+    private void showBottomSheet() {
+        ElectricityBottomSheet ebs = new ElectricityBottomSheet();
+        ebs.show(getFragmentManager(), ebs.getTag());
     }
 }
