@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/electricity_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,6 @@
             android:id="@+id/imageViewTopHead"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="bottom|end"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:src="@mipmap/ic_josh_image"
             android:layout_alignParentTop="true"

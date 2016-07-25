@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjectLI</string>
+    <string name="app_name">Daily Book</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,7 +8,7 @@
 
     <!-- drawer strings -->
     <string name="drawer_title">User Name</string>
-    <string name="drawer_subtitle">WeiHua Li</string>
+    <string name="drawer_subtitle">User Email</string>
 
     <!-- drawer menu -->
     <string name="drawer_money">Accounting</string>

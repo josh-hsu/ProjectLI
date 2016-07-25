@@ -23,23 +23,16 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tvSubTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|fill_horizontal"
-                android:padding="6dp"
-                android:text="My subtitle..."
+                android:id="@+id/textViewElectricIncrease"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_blue_circle"
+                android:gravity="center"
+                android:text="+15"
+                android:textColor="#EC407A"
                 android:textSize="12sp"
-                android:layout_below="@+id/tvTitle"
-                android:layout_alignStart="@+id/tvTitle" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:src="@mipmap/ic_josh_image"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,9 +42,21 @@
                 android:id="@+id/tvTitle"
                 android:textColor="@color/colorAccent"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/imageView"
+                android:layout_toEndOf="@+id/textViewElectricIncrease"
                 android:paddingStart="6dp"
                 android:paddingEnd="40dp"/>
+
+            <TextView
+                android:id="@+id/tvSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|fill_horizontal"
+                android:padding="4dp"
+                android:text="16:31, Yesterday"
+                android:textSize="12sp"
+                android:textColor="#EC407A"
+                android:layout_below="@+id/tvTitle"
+                android:layout_alignStart="@+id/tvTitle" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -76,19 +81,21 @@
                 android:layout_height="1dp"
                 android:background="#1F000000"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:textColor="@color/colorAccent"
-                android:text="Item One" />
+            <Button
+                android:id="@+id/btn_share"
+                android:text="EDIT"
+                android:background="#00000000"
+                android:textColor="#42A5F5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:textColor="@color/colorAccent"
-                android:text="Item Two" />
+            <Button
+                android:id="@+id/btn_more"
+                android:background="#00000000"
+                android:textColor="#F44336"
+                android:text="DELETE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>

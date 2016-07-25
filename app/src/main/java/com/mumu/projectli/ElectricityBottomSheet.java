@@ -22,12 +22,12 @@ public class ElectricityBottomSheet extends BottomSheetDialogFragment {
 
     // An array of meaningless titles
     private static final String[] someTitles = {
-            "This is a Title",
-            "Another Short Title",
-            "Here's a Much Longer Title for Everyone to Deal With!!",
-            "Coming Soon...",
-            "Hey Bud, How About That Local Sports Team?",
-            "What's Up Pussycat? Whoaaa"
+            "3412",
+            "3421",
+            "3427",
+            "3433",
+            "3439",
+            "3445"
     };
 
 
