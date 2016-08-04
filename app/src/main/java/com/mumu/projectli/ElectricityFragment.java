@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,15 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LineGraph;
 import com.echo.holographlibrary.LinePoint;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -184,9 +191,17 @@ public class ElectricityFragment extends MainFragment {
             mLastRecordTextView.setText("");
             mCurrentRecordDiffTextView.setText("");
             mCurrentRecordTextView.setText(getString(R.string.electric_add_next));
+            mCurrentRecordTextView.setTextSize(26);
         } else {
+            int current, last;
+            current = Integer.parseInt(mRecordHandler.getHistoryList().get(1).record);
+            last = Integer.parseInt(mRecordHandler.getHistoryList().get(0).record);
+
             mCircleTextView.setText(""); // make sure circle doesn't contain text
-            animateTextView(0, 44, mCurrentRecordDiffTextView);
+            mCurrentRecordTextView.setTextSize(58);
+            mCurrentRecordTextView.setText(""+current);
+            mLastRecordTextView.setText(""+last);
+            animateTextView(0, current-last, mCurrentRecordDiffTextView);
         }
     }
 
@@ -247,6 +262,38 @@ public class ElectricityFragment extends MainFragment {
      *  Add electricity
      */
     private void showAddDialog() {
+        MaterialDialog builder = new MaterialDialog.Builder(getContext())
+                .title(getString(R.string.electric_add))
+                .inputType(InputType.TYPE_CLASS_NUMBER)
+                .input(getString(R.string.electric_add_field_holder), "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        Log.d(TAG, "Get input " + input);
+                        addNewRecordFromUser(input.toString(), "NOW");
+                        applyDataToViews();
+                    }
+                }).negativeText(getString(R.string.electric_add_cancel)).show();
+    }
 
+    private int addNewRecordFromUser(String record, String date) {
+        String targetDate;
+
+        if (date.equals("NOW")) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            targetDate = df.format(Calendar.getInstance().getTime());
+        } else {
+            targetDate = date;
+        }
+
+        try {
+            mRecordHandler.addRecord(new ElectricityRecordParser.Entry("1", targetDate, record));
+            mRecordHandler.refreshFromFile();
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "Fail to add record " + e.getMessage());
+        }
+
+        return -1;
     }
 }

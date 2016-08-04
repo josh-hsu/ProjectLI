@@ -29,6 +29,13 @@
     <string name="electric_button_add">新增資料(Test Only)</string>
     <string name="electric_graph_not_ready">圖表資料尚未更新\n點圖看詳細用電</string>
 
+    <string name="electric_add">新增用電</string>
+    <string name="electric_add_info">請輸入您現在的用電值</string>
+    <string name="electric_no_data">空空的，增加第一筆吧</string>
+    <string name="electric_add_next">再新增一筆來比較</string>
+    <string name="electric_add_field_holder">現在讀數</string>
+    <string name="electric_add_cancel">取消</string>
+
     <!-- home activity -->
     <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
     <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
