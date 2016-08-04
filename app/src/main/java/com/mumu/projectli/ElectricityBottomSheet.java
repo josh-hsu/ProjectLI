@@ -12,7 +12,10 @@ import android.view.View;
 import java.util.ArrayList;
 
 /**
- * Created by josh on 2016/7/24.
+ * ElectricityBottomSheet class holds the view of total usage data
+ *
+ * We must implement a maximum length of data in case this occupies too
+ * many resources
  */
 public class ElectricityBottomSheet extends BottomSheetDialogFragment {
 

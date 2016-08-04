@@ -144,6 +144,7 @@ public class ElectricityFragment extends MainFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         prepareView(view);
         prepareData();
         //applyDataToViews();

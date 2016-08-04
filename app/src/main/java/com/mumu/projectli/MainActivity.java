@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -104,40 +105,47 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         // Create a new fragment and specify the fragment to show based on nav item clicked
         final MainFragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        ActionBar actionBar = getSupportActionBar();
 
         int id = item.getItemId();
 
         if (id == R.id.nav_money) {
             fragment = mFragmentList.get(1);
+            if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_money));
         } else if (id == R.id.nav_electricity) {
             fragment = mFragmentList.get(0);
+            if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_electricity));
         } else if (id == R.id.nav_bodyweight) {
             fragment = mFragmentList.get(1);
+            if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_body_weight));
         } else if (id == R.id.nav_share) {
-            fragment = mFragmentList.get(1);
+            fragment = null;
+            showSnackBarMessage("Share function implementing");
         } else if (id == R.id.nav_send) {
-            fragment = mFragmentList.get(1);
+            fragment = null;
+            showSnackBarMessage("Send function implementing");
         } else {
-            fragment = mFragmentList.get(1);
+            return false;
         }
 
-        // Insert the fragment by replacing any existing fragment
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Setting onClickListener
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment.onFabClick(view);
-            }
-        });
+        // null fragment means this action doesn't need to transfer to other fragment
+        if (fragment != null) {
+            // Insert the fragment by replacing any existing fragment
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            // Setting onClickListener
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.onFabClick(view);
+                }
+            });
+        }
 
         // Dismiss drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
