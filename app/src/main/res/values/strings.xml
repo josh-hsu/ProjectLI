@@ -33,6 +33,12 @@
     <string name="electric_button_add">Add Electricity</string>
     <string name="electric_graph_not_ready">Graph View is not ready\ntouch it to view all data</string>
 
+    <string name="electric_add">Add a record</string>
+    <string name="electric_add_info">Please add a new record</string>
+    <string name="electric_data_file_name">/electric_records.xml</string>
+    <string name="electric_no_data">No data here, add one now</string>
+    <string name="electric_add_next">Add new one to compare</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -7,30 +7,17 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LineGraph;
 import com.echo.holographlibrary.LinePoint;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -42,21 +29,16 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ElectricityFragment extends MainFragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "ProjectLI";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String mParam1, mParam2;
 
-    private List<ElectricityRecordParser.Entry> mHistoryList;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // View holder
     private TextView mTodayElectricityTextView;
-    private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView;
-    private TextView mLinGraphTextView;
-    private ListView mHistoryListView;
+    private TextView mLastRecordTextView, mCurrentRecordTextView, mCurrentRecordDiffTextView, mCircleTextView;
+    private TextView mLineGraphTextView;
 
     private LineGraph mLineGraph;
     private LayoutInflater mInflater;
@@ -64,6 +46,9 @@ public class ElectricityFragment extends MainFragment {
     private OnFragmentInteractionListener mListener;
     private Typeface mAndroidClockMonoThin;
     private Typeface mAlphabetFace;
+
+    // Data Holder
+    private ElectricityRecordHandler mRecordHandler;
 
     public ElectricityFragment() {
         // Required empty public constructor
@@ -111,7 +96,7 @@ public class ElectricityFragment extends MainFragment {
         }
         Log.d(TAG, "set fab appearance");
         mFab.setImageResource(R.drawable.ic_menu_add);
-        mFab.setContentDescription("Description from electricity");
+        mFab.setContentDescription("Add record");
         mFab.setVisibility(View.VISIBLE);
     }
 
@@ -121,7 +106,8 @@ public class ElectricityFragment extends MainFragment {
         final Activity activity = getActivity();
         if (activity instanceof MainActivity) {
             final MainActivity deskClockActivity = (MainActivity) activity;
-            deskClockActivity.showSnackBarMessage("New record is not implemented");
+            deskClockActivity.showSnackBarMessage(getString(R.string.electric_add_info));
+            showAddDialog();
         }
     }
 
@@ -144,23 +130,21 @@ public class ElectricityFragment extends MainFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         prepareView(view);
         prepareData();
-        //applyDataToViews();
+        applyDataToViews();
     }
 
     private void prepareView(View view) {
-        //mTodayElectricityTextView = (TextView) view.findViewById(R.id.textViewTodayElectricity);
-        //mHistoryListView = (ListView) view.findViewById(R.id.listViewElectricHistory);
         mLastRecordTextView = (TextView) view.findViewById(R.id.textViewElectricLastRecord);
         mCurrentRecordTextView = (TextView) view.findViewById(R.id.textViewElectricTodayRecord);
         mCurrentRecordDiffTextView = (TextView) view.findViewById(R.id.textViewElectricRecordDiff);
+        mCircleTextView = (TextView) view.findViewById(R.id.textViewElectricCircle);
 
-        mLinGraphTextView = (TextView) view.findViewById(R.id.textViewGraphNotReady);
+        mLineGraphTextView = (TextView) view.findViewById(R.id.textViewGraphNotReady);
         mLineGraph = (LineGraph)view.findViewById(R.id.graphElectricity);
 
-        mLinGraphTextView.setOnClickListener(new View.OnClickListener() {
+        mLineGraphTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "TOUCH");
@@ -173,29 +157,37 @@ public class ElectricityFragment extends MainFragment {
         mLastRecordTextView.setTypeface(mAndroidClockMonoThin);
         mCurrentRecordTextView.setTypeface(mAndroidClockMonoThin);
         mCurrentRecordDiffTextView.setTypeface(mAndroidClockMonoThin);
+        mCircleTextView.setTypeface(mAlphabetFace);
 
-        animateTextView(0, 44, mCurrentRecordDiffTextView);
         drawFakeChart();
     }
 
     private void prepareData() {
-        InputStream in = getResources().openRawResource(R.raw.electricity_sample);
-        try {
-            mHistoryList = new ElectricityRecordParser().parse(in);
+        mRecordHandler = new ElectricityRecordHandler(getActivity());
+
+        /*try {
+            mRecordHandler.addRecord(new ElectricityRecordParser.Entry("5","201515we15r15","8888"));
+            mRecordHandler.refreshFromFile();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "Parsing XML file failed. Fetching xml to developer.");
-            return;
-        }
-        Log.d(TAG, "xml data:");
-        for (ElectricityRecordParser.Entry entry: mHistoryList) {
-            Log.d(TAG, "  " + entry.toString());
-        }
+        }*/
     }
 
     private void applyDataToViews() {
-        ElectricityHistoryAdapter adapter = new ElectricityHistoryAdapter(mInflater, mHistoryList);
-        mHistoryListView.setAdapter(adapter);
+        if (mRecordHandler.getHistoryList().size() == 0) {
+            mCircleTextView.setText(getString(R.string.electric_no_data));
+            mLastRecordTextView.setText("");
+            mCurrentRecordDiffTextView.setText("");
+            mCurrentRecordTextView.setText("");
+        } else if (mRecordHandler.getHistoryList().size() == 1) {
+            mCircleTextView.setText(mRecordHandler.getHistoryList().get(0).record); // make sure circle doesn't contain text
+            mLastRecordTextView.setText("");
+            mCurrentRecordDiffTextView.setText("");
+            mCurrentRecordTextView.setText(getString(R.string.electric_add_next));
+        } else {
+            mCircleTextView.setText(""); // make sure circle doesn't contain text
+            animateTextView(0, 44, mCurrentRecordDiffTextView);
+        }
     }
 
     /**
@@ -249,5 +241,12 @@ public class ElectricityFragment extends MainFragment {
     private void showBottomSheet() {
         ElectricityBottomSheet ebs = new ElectricityBottomSheet();
         ebs.show(getFragmentManager(), ebs.getTag());
+    }
+
+    /*
+     *  Add electricity
+     */
+    private void showAddDialog() {
+
     }
 }

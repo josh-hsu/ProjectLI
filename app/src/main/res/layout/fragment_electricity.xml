@@ -31,8 +31,7 @@
                 android:background="@drawable/bg_blue_circle"
                 android:gravity="center"
                 android:text=""
-                android:textColor="#FFFFFF"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:layout_marginTop="24dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />

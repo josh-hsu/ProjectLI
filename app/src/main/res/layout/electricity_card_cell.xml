@@ -62,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
-                android:src="@mipmap/ic_drawer_image"
                 android:textColor="@color/colorAccent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
