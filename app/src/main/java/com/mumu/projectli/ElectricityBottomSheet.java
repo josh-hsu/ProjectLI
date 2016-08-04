@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import java.util.ArrayList;
-
 /**
  * ElectricityBottomSheet class holds the view of total usage data
  *
@@ -22,17 +20,7 @@ public class ElectricityBottomSheet extends BottomSheetDialogFragment {
     private RecyclerView mEHRecycler;
     private ElectricityRecyclerViewAdapter mEHAdapter;
     private StaggeredGridLayoutManager mSGLM;
-
-    // An array of meaningless titles
-    private static final String[] someTitles = {
-            "3412",
-            "3421",
-            "3427",
-            "3433",
-            "3439",
-            "3445"
-    };
-
+    private static ElectricityRecordHandler mRecordHandler;
 
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
 
@@ -62,21 +50,16 @@ public class ElectricityBottomSheet extends BottomSheetDialogFragment {
         mSGLM = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mEHRecycler.setLayoutManager(mSGLM);
 
-        //////////////////////////////
         //  Setup Adapter & DataSet //
-        //////////////////////////////
-        ArrayList<String> myDataset = new ArrayList<String>();
-
-        // Load up the dataset with random titles
-        for (int x = 0; x < 50; x++) {
-            myDataset.add(someTitles[x % 5]);
-        }
-
-        mEHAdapter = new ElectricityRecyclerViewAdapter(myDataset);
+        mEHAdapter = new ElectricityRecyclerViewAdapter(mRecordHandler);
         mEHRecycler.setAdapter(mEHAdapter);
 
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
+    }
+
+    public void setElectricityRecordHandler(ElectricityRecordHandler handler) {
+        mRecordHandler = handler;
     }
 }

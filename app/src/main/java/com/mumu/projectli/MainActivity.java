@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton mFab;
     View mCoordinateLayoutView;
     List<MainFragment> mFragmentList;
+    static boolean mDrawOnce = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Snackbar.make(mCoordinateLayoutView, getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        if (mDrawOnce) {
+            Snackbar.make(mCoordinateLayoutView, getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            mDrawOnce = false;
+        }
     }
 
     @Override

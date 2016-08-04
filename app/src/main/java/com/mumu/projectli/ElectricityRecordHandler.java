@@ -1,6 +1,5 @@
 package com.mumu.projectli;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -100,14 +99,52 @@ public class ElectricityRecordHandler {
         return in;
     }
 
-    public List<ElectricityRecordParser.Entry> getHistoryList() {
-        return mHistoryList;
-    }
-
     public void refreshFromFile() {
         init();
     }
 
+    // Fetch content of list
+    public List<ElectricityRecordParser.Entry> getHistoryList() {
+        return mHistoryList;
+    }
+
+    public ElectricityRecordParser.Entry get(int idx) {
+        if (idx < mHistoryList.size())
+            return mHistoryList.get(idx);
+        else
+            return null;
+    }
+
+    public int getCount() {
+        return mHistoryList.size();
+    }
+
+    public int getInverseIndex(int idx) {
+        return getCount() - idx - 1;
+    }
+
+    public String getRecord(int idx) {
+        if (idx < getCount())
+            return get(getInverseIndex(idx)).record;
+        else
+            return null;
+    }
+
+    public String getDate(int idx) {
+        if (idx < getCount())
+            return get(getInverseIndex(idx)).date;
+        else
+            return null;
+    }
+
+    public String getSerial(int idx) {
+        if (idx < getCount())
+            return get(getInverseIndex(idx)).serial;
+        else
+            return null;
+    }
+
+    // Record operation
     public boolean addRecord (ElectricityRecordParser.Entry record) throws Exception {
         String userDataPath = mDataDirectory + mContext.getString(R.string.electric_data_file_name);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

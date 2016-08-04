@@ -165,37 +165,29 @@ public class ElectricityFragment extends MainFragment {
         mCurrentRecordTextView.setTypeface(mAndroidClockMonoThin);
         mCurrentRecordDiffTextView.setTypeface(mAndroidClockMonoThin);
         mCircleTextView.setTypeface(mAlphabetFace);
-
-        drawFakeChart();
     }
 
     private void prepareData() {
         mRecordHandler = new ElectricityRecordHandler(getActivity());
-
-        /*try {
-            mRecordHandler.addRecord(new ElectricityRecordParser.Entry("5","201515we15r15","8888"));
-            mRecordHandler.refreshFromFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void applyDataToViews() {
+        // handle circle outline view
         if (mRecordHandler.getHistoryList().size() == 0) {
             mCircleTextView.setText(getString(R.string.electric_no_data));
             mLastRecordTextView.setText("");
             mCurrentRecordDiffTextView.setText("");
             mCurrentRecordTextView.setText("");
         } else if (mRecordHandler.getHistoryList().size() == 1) {
-            mCircleTextView.setText(mRecordHandler.getHistoryList().get(0).record); // make sure circle doesn't contain text
+            mCircleTextView.setText(mRecordHandler.getRecord(0)); // make sure circle doesn't contain text
             mLastRecordTextView.setText("");
             mCurrentRecordDiffTextView.setText("");
             mCurrentRecordTextView.setText(getString(R.string.electric_add_next));
             mCurrentRecordTextView.setTextSize(26);
         } else {
             int current, last;
-            current = Integer.parseInt(mRecordHandler.getHistoryList().get(1).record);
-            last = Integer.parseInt(mRecordHandler.getHistoryList().get(0).record);
+            current = Integer.parseInt(mRecordHandler.getRecord(0));
+            last = Integer.parseInt(mRecordHandler.getRecord(1));
 
             mCircleTextView.setText(""); // make sure circle doesn't contain text
             mCurrentRecordTextView.setTextSize(58);
@@ -203,6 +195,14 @@ public class ElectricityFragment extends MainFragment {
             mLastRecordTextView.setText(""+last);
             animateTextView(0, current-last, mCurrentRecordDiffTextView);
         }
+
+        // handle chart
+        if (mRecordHandler.getCount() < 1) {
+            drawFakeChart();
+        } else  {
+            drawChart(10);
+        }
+
     }
 
     /**
@@ -238,12 +238,47 @@ public class ElectricityFragment extends MainFragment {
         }
     }
 
+    /*
+     * drawChart
+     *   we only draw the newest 10 points
+     */
+    private void drawChart(int maxCount) {
+        int availableDataCount = mRecordHandler.getCount() - 1;
+        int maximumY = 10;
+        Line l = new Line();
+
+        if (availableDataCount <= 1) {
+            Log.d(TAG, "At least 2 points to draw a line");
+            return;
+        }
+
+        mLineGraph.removeAllLines();
+
+        for (int i = 0; i < (availableDataCount > maxCount ? maxCount : availableDataCount); i ++) {
+            int current = Integer.parseInt(mRecordHandler.getRecord(i));
+            int last = Integer.parseInt(mRecordHandler.getRecord(i+1));
+            LinePoint p = new LinePoint();
+            p.setX(i);
+            p.setY(current - last);
+            l.addPoint(p);
+
+            if (current - last > maximumY)
+                maximumY = current - last;
+        }
+        l.setColor(Color.parseColor("#FFBB33"));
+
+        mLineGraph.addLine(l);
+        mLineGraph.setRangeY(-5, maximumY);
+        //mLineGraph.setLineToFill(0);
+    }
+
     private void drawFakeChart() {
         Line l = new Line();
+        mLineGraph.removeAllLines();
         for (int i = 0; i < 10; i ++) {
             LinePoint p = new LinePoint();
             p.setX(i);
-            p.setY(i > 5 ? 10 - i : i + 10);
+            p.setY(0);
             l.addPoint(p);
         }
         l.setColor(Color.parseColor("#FFBB33"));
@@ -255,6 +290,7 @@ public class ElectricityFragment extends MainFragment {
 
     private void showBottomSheet() {
         ElectricityBottomSheet ebs = new ElectricityBottomSheet();
+        ebs.setElectricityRecordHandler(mRecordHandler);
         ebs.show(getFragmentManager(), ebs.getTag());
     }
 

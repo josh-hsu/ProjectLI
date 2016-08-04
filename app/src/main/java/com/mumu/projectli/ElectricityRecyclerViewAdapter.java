@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -47,12 +48,12 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
     // Hold the position of the expanded item
     private int expandedPosition = -1;
 
+    private ElectricityRecordHandler mRecordHandler;
 
-    private ArrayList<String> mDataset;
 
 
-    public ElectricityRecyclerViewAdapter (ArrayList<String> myDataset) {
-        this.mDataset = myDataset;
+    public ElectricityRecyclerViewAdapter (ElectricityRecordHandler rh) {
+        this.mRecordHandler = rh;
     }
 
     @Override
@@ -74,14 +75,15 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mRecordHandler.getCount();
     }
 
     @Override
     public void onBindViewHolder(ElectricityRecyclerViewAdapter.ViewHolder holder, int position) {
 
         int colorIndex = randy.nextInt(bgColors.length);
-        holder.tvTitle.setText(mDataset.get(position));
+        holder.tvTitle.setText(mRecordHandler.getRecord(position));
+        holder.tvSubTitle.setText(mRecordHandler.getDate(position));
         //holder.tvTitle.setBackgroundColor(bgColors[colorIndex]);
         //holder.tvSubTitle.setBackgroundColor(sbgColors[colorIndex]);
 
@@ -95,7 +97,7 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
     @Override
     public void onClick(View view) {
         ViewHolder holder = (ViewHolder) view.getTag();
-        String theString = mDataset.get(holder.getPosition());
+        String theString = mRecordHandler.getRecord(holder.getPosition());
 
         // Check for an expanded view, collapse if you find one
         if (expandedPosition >= 0) {
