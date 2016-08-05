@@ -29,7 +29,6 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Paint.Align;
 import android.graphics.Path.Direction;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -413,7 +412,6 @@ public class LineGraph extends View {
 	    if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_UP){
 	    	shouldUpdate = true;
 	    	postInvalidate();
-			Log.d("ProjectLI", "touch graph on index " + indexSelected);
 	    }
 
 	    return true;

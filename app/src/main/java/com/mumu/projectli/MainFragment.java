@@ -18,6 +18,10 @@ public class MainFragment extends Fragment {
         // Do nothing here , only in derived classes
     }
 
+    public void onDetailClick() {
+        // Do nothing here , only in derived classes
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

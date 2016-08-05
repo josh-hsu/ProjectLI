@@ -13,6 +13,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -137,11 +142,45 @@ public class ElectricityRecordHandler {
             return null;
     }
 
+    public String getDateFormatted(int idx) {
+        String rawDate = getDate(idx);
+
+        try {
+            Date df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(rawDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(df);
+            Calendar today = Calendar.getInstance();
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DATE, -1);
+            DateFormat timeFormatter = new SimpleDateFormat("hh:mma");
+
+            if (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
+                return mContext.getString(R.string.electric_graphic_today) + " " + timeFormatter.format(df);
+            } else if (calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
+                return mContext.getString(R.string.electric_graphic_yesterday) + " " + timeFormatter.format(df);
+            } else {
+                return df.toString();
+            }
+        } catch (ParseException e) {
+            Log.e(TAG, "Parsing date string failed");
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
     public String getSerial(int idx) {
         if (idx < getCount())
             return get(getInverseIndex(idx)).serial;
         else
             return null;
+    }
+
+    public int getIncrement(int idx) {
+        if (idx < getCount() - 1)
+            return Integer.parseInt(getRecord(idx)) - Integer.parseInt(getRecord(idx+1));
+        else
+            return -1;
     }
 
     // Record operation

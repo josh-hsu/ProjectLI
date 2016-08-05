@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton mFab;
     View mCoordinateLayoutView;
     List<MainFragment> mFragmentList;
+    MainFragment mCurrentPresentFragment;
     static boolean mDrawOnce = true;
 
     @Override
@@ -104,6 +105,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             Toast.makeText(this, "Not yet", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.action_detail) {
+            if (mCurrentPresentFragment != null) {
+                mCurrentPresentFragment.onDetailClick();
+            }
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -140,6 +146,8 @@ public class MainActivity extends AppCompatActivity
 
         // null fragment means this action doesn't need to transfer to other fragment
         if (fragment != null) {
+            mCurrentPresentFragment = fragment;
+
             // Insert the fragment by replacing any existing fragment
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
             // Setting onClickListener
@@ -170,5 +178,9 @@ public class MainActivity extends AppCompatActivity
     public void showSnackBarMessage(String msg) {
         Snackbar.make(mCoordinateLayoutView, msg, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    public void onDetailClick() {
+
     }
 }

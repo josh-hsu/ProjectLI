@@ -10,6 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:id="@+id/textViewBackgroundColorSheet"
+            android:background="#F23F43"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/imageViewTopHead"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
         <ImageView
             android:id="@+id/imageViewTopHead"
             android:layout_width="80dp"

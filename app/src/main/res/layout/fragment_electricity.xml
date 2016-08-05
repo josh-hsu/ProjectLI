@@ -99,9 +99,10 @@
                 android:maxLines="2"
                 android:textAlignment="center"
                 android:text="@string/electric_graph_not_ready"
-                android:id="@+id/textViewGraphNotReady"
+                android:id="@+id/textViewGraphDetail"
                 android:layout_alignParentEnd="true"
                 android:layout_alignStart="@+id/textViewHistory" />
+
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

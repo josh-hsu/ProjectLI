@@ -24,7 +24,6 @@ import com.echo.holographlibrary.LinePoint;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -119,6 +118,12 @@ public class ElectricityFragment extends MainFragment {
     }
 
     @Override
+    public void onDetailClick() {
+        Log.d(TAG, "Detail click on electricity fragment");
+        showBottomSheet();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -148,16 +153,8 @@ public class ElectricityFragment extends MainFragment {
         mCurrentRecordDiffTextView = (TextView) view.findViewById(R.id.textViewElectricRecordDiff);
         mCircleTextView = (TextView) view.findViewById(R.id.textViewElectricCircle);
 
-        mLineGraphTextView = (TextView) view.findViewById(R.id.textViewGraphNotReady);
+        mLineGraphTextView = (TextView) view.findViewById(R.id.textViewGraphDetail);
         mLineGraph = (LineGraph)view.findViewById(R.id.graphElectricity);
-
-        mLineGraphTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "TOUCH");
-                showBottomSheet();
-            }
-        });
 
         mAndroidClockMonoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AndroidClockMono-Thin.ttf");
         mAlphabetFace = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Thin.ttf");
@@ -202,6 +199,12 @@ public class ElectricityFragment extends MainFragment {
         } else  {
             drawChart(10);
         }
+
+        mLineGraph.setOnPointClickedListener(new LineGraph.OnPointClickedListener() {
+            public void onClick(int lineIndex, int pointIndex) {
+                touchOnChart(lineIndex, pointIndex);
+            }
+        });
 
     }
 
@@ -255,26 +258,29 @@ public class ElectricityFragment extends MainFragment {
         mLineGraph.removeAllLines();
 
         for (int i = 0; i < (availableDataCount > maxCount ? maxCount : availableDataCount); i ++) {
-            int current = Integer.parseInt(mRecordHandler.getRecord(i));
-            int last = Integer.parseInt(mRecordHandler.getRecord(i+1));
+            int increment = mRecordHandler.getIncrement(i);
             LinePoint p = new LinePoint();
             p.setX(i);
-            p.setY(current - last);
+            p.setY(increment);
             l.addPoint(p);
 
-            if (current - last > maximumY)
-                maximumY = current - last;
+            if (increment > maximumY)
+                maximumY = increment;
         }
         l.setColor(Color.parseColor("#FFBB33"));
 
         mLineGraph.addLine(l);
         mLineGraph.setRangeY(-5, maximumY);
-        //mLineGraph.setLineToFill(0);
+        mLineGraph.setLineToFill(0);
+        mLineGraphTextView.setText(getString(R.string.electric_graphic_touch_to_see_detail));
     }
 
     private void drawFakeChart() {
         Line l = new Line();
         mLineGraph.removeAllLines();
+        mLineGraph.showHorizontalGrid(true);
+        mLineGraph.showMinAndMaxValues(true);
+
         for (int i = 0; i < 10; i ++) {
             LinePoint p = new LinePoint();
             p.setX(i);
@@ -285,7 +291,19 @@ public class ElectricityFragment extends MainFragment {
 
         mLineGraph.addLine(l);
         mLineGraph.setRangeY(-5, 22);
-        //mLineGraph.setLineToFill(0);
+        mLineGraph.setLineToFill(0);
+        mLineGraphTextView.setText(getString(R.string.electric_graphic_no_enough_data));
+    }
+
+    private void touchOnChart(int lineIndex, int pointIndex) {
+        Log.d(TAG, "Touch on line " + lineIndex + " point " + pointIndex);
+        if (mRecordHandler.getCount() < 2) {
+            mLineGraphTextView.setText(getString(R.string.electric_graphic_no_detail));
+        } else {
+            String text = "+" + mRecordHandler.getIncrement(pointIndex) + "\n" +
+                    mRecordHandler.getDateFormatted(pointIndex);
+            mLineGraphTextView.setText(text);
+        }
     }
 
     private void showBottomSheet() {

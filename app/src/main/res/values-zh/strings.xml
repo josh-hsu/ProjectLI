@@ -5,6 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">設定</string>
+    <string name="action_detail">所有資料</string>
 
     <!-- drawer strings -->
     <string name="drawer_title">您</string>
@@ -18,6 +19,10 @@
     <string name="drawer_send">問題回報</string>
     <string name="drawer_share">分享給 ... </string>
 
+    <!-- home activity -->
+    <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
+    <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
+
     <!-- Electricity activity -->
     <string name="electric_today">今日概覽</string>
     <string name="electric_last_record_time">上次登入</string>
@@ -28,15 +33,18 @@
     <string name="electric_history">歷史用電</string>
     <string name="electric_button_add">新增資料(Test Only)</string>
     <string name="electric_graph_not_ready">圖表資料尚未更新\n點圖看詳細用電</string>
+    <string name="electric_no_data">空空的，增加第一筆吧</string>
 
     <string name="electric_add">新增用電</string>
     <string name="electric_add_info">請輸入您現在的用電值</string>
-    <string name="electric_no_data">空空的，增加第一筆吧</string>
     <string name="electric_add_next">再新增一筆來比較</string>
     <string name="electric_add_field_holder">現在讀數</string>
     <string name="electric_add_cancel">取消</string>
 
-    <!-- home activity -->
-    <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
-    <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
+    <string name="electric_graphic_no_enough_data">至少要三筆資料才能畫圖</string>
+    <string name="electric_graphic_no_detail">抱歉，資料不足</string>
+    <string name="electric_graphic_touch_to_see_detail">觸摸數據點來看詳細資料</string>
+    <string name="electric_graphic_today">今天</string>
+    <string name="electric_graphic_yesterday">昨天</string>
+
 </resources>
