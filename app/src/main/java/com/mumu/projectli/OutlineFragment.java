@@ -4,34 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MoneyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MoneyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MoneyFragment extends MainFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TAG = "MoneyFragment";
+public class OutlineFragment extends MainFragment {
+    private static final String TAG = "OutlineFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public MoneyFragment() {
+    public OutlineFragment() {
         // Required empty public constructor
     }
 
@@ -43,9 +30,8 @@ public class MoneyFragment extends MainFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment MoneyFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static MoneyFragment newInstance(String param1, String param2) {
-        MoneyFragment fragment = new MoneyFragment();
+    public static OutlineFragment newInstance(String param1, String param2) {
+        OutlineFragment fragment = new OutlineFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,15 +51,7 @@ public class MoneyFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_money, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return inflater.inflate(R.layout.fragment_ontline, container, false);
     }
 
     @Override
@@ -95,31 +73,20 @@ public class MoneyFragment extends MainFragment {
 
     @Override
     public void onFabClick(View view) {
-        Log.d(TAG, "Fab click from money");
+        Log.d(TAG, "Fab click from outline");
         final Activity activity = getActivity();
         if (activity instanceof MainActivity) {
             final MainActivity deskClockActivity = (MainActivity) activity;
-            deskClockActivity.showSnackBarMessage("這裡都這麼空了，你還想加什麼");
+            deskClockActivity.showSnackBarMessage("Test for outline");
         }
     }
 
     @Override
     public void onDetailClick() {
-        Log.d(TAG, "on detail click on money");
+        Log.d(TAG, "on detail click on outline");
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

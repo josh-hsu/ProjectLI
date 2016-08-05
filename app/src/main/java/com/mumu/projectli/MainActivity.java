@@ -33,7 +33,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MoneyFragment.OnFragmentInteractionListener,
-        ElectricityFragment.OnFragmentInteractionListener {
+        ElectricityFragment.OnFragmentInteractionListener,
+        OutlineFragment.OnFragmentInteractionListener {
 
     private FloatingActionButton mFab;
     private View mCoordinateLayoutView;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         try {
             mFragmentList.add(ElectricityFragment.class.newInstance());
             mFragmentList.add(MoneyFragment.class.newInstance());
+            mFragmentList.add(OutlineFragment.class.newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity
                     .setAction("Action", null).show();
             mDrawOnce = false;
         }
+
+        showOutlineFragment();
     }
 
     @Override
@@ -136,7 +140,10 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_money) {
+        if (id == R.id.nav_outline) {
+            fragment = mFragmentList.get(2);
+            if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_outline));
+        } else if (id == R.id.nav_money) {
             fragment = mFragmentList.get(1);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_money));
         } else if (id == R.id.nav_electricity) {
@@ -215,6 +222,29 @@ public class MainActivity extends AppCompatActivity
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1)
             requestPermissions(perms, permsRequestCode);
+    }
+
+    private void showOutlineFragment() {
+        final MainFragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ActionBar actionBar = getSupportActionBar();
+
+        fragment = mFragmentList.get(2);
+        if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_outline));
+
+        if (fragment != null) {
+            mCurrentPresentFragment = fragment;
+
+            // Insert the fragment by replacing any existing fragment
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            // Setting onClickListener
+            mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment.onFabClick(view);
+                }
+            });
+        }
     }
 
     private void startBugReportActivity() {

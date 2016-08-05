@@ -12,6 +12,7 @@
     <string name="drawer_subtitle">joshhsu1002@gmail.com</string>
 
     <!-- drawer menu -->
+    <string name="drawer_outline">首頁</string>
     <string name="drawer_money">記帳</string>
     <string name="drawer_electricity">電表</string>
     <string name="drawer_body_weight">體重</string>
