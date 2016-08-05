@@ -1,7 +1,11 @@
 package com.mumu.projectli;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +35,12 @@ public class MainActivity extends AppCompatActivity
         MoneyFragment.OnFragmentInteractionListener,
         ElectricityFragment.OnFragmentInteractionListener {
 
-    FloatingActionButton mFab;
-    View mCoordinateLayoutView;
-    List<MainFragment> mFragmentList;
-    MainFragment mCurrentPresentFragment;
-    static boolean mDrawOnce = true;
+    private FloatingActionButton mFab;
+    private View mCoordinateLayoutView;
+    private List<MainFragment> mFragmentList;
+    private MainFragment mCurrentPresentFragment;
+    private static boolean mDrawOnce = true;
+    private boolean mShouldStartBugReport = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +150,9 @@ public class MainActivity extends AppCompatActivity
             showSnackBarMessage("Share function implementing");
         } else if (id == R.id.nav_send) {
             fragment = null;
-            showSnackBarMessage("Send function implementing");
+            mShouldStartBugReport = true;
+            showSnackBarMessage(getString(R.string.bugreport_permission_request));
+            requestPermissions();
         } else {
             return false;
         }
@@ -171,6 +184,22 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this,"Hello from the activity", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
+        switch (permsRequestCode) {
+            case 200:
+                boolean writeAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (writeAccepted && mShouldStartBugReport) {
+                    startBugReportActivity();
+                } else {
+                    Toast.makeText(this, getString(R.string.bugreport_permission_not_grant), Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                Toast.makeText(this, "No handle permission grant", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public FloatingActionButton getFab() {
         return mFab;
     }
@@ -180,7 +209,63 @@ public class MainActivity extends AppCompatActivity
                 .setAction("Action", null).show();
     }
 
-    public void onDetailClick() {
+    private void requestPermissions() {
+        String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE"};
+        int permsRequestCode = 200;
 
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1)
+            requestPermissions(perms, permsRequestCode);
     }
+
+    private void startBugReportActivity() {
+        String userDataPath = getFilesDir().getAbsolutePath() + getString(R.string.electric_data_file_name);
+        File srcFile = new File(userDataPath);
+        String destFilePath = Environment.getExternalStorageDirectory() + "/electricity_records.xml";
+
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(new File(destFilePath));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                    in = null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        File file = new File(Environment.getExternalStorageDirectory(), "electricity_records.xml");
+        Uri path = Uri.fromFile(file);
+        String to[] = {"alenbos0517@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("vnd.android.cursor.dir/email");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "問題回報");
+        startActivity(Intent.createChooser(emailIntent , "寄出信件使用..."));
+
+        mShouldStartBugReport = false;
+    }
+
 }

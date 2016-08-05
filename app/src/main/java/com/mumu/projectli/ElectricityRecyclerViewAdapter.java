@@ -1,18 +1,13 @@
 package com.mumu.projectli;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Created by josh on 2016/7/24.
@@ -21,36 +16,8 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
         implements View.OnClickListener {
 
     private static final String TAG = "ProjectLI";
-
-    // Some dark background colors to spice up
-    // our title in the display (Black, Red, Green, Blue)
-    private static final int[] bgColors = {
-            0xAA000000,
-            0xFF800000,
-            0xFF008000,
-            0xFF000080
-    };
-
-    // Some darker background colors to spice up
-    // our subtitle in the display (Black, Red, Green, Blue)
-    private static final int[] sbgColors = {
-            0xFF000000,
-            0xFF600000,
-            0xFF006000,
-            0xFF000060
-    };
-
-    // Get a Random generated to pick a cell's
-    // background color from the list above.
-    private static Random randy = new Random();
-
-
-    // Hold the position of the expanded item
     private int expandedPosition = -1;
-
     private ElectricityRecordHandler mRecordHandler;
-
-
 
     public ElectricityRecyclerViewAdapter (ElectricityRecordHandler rh) {
         this.mRecordHandler = rh;
@@ -80,12 +47,29 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
 
     @Override
     public void onBindViewHolder(ElectricityRecyclerViewAdapter.ViewHolder holder, int position) {
+        int increment = mRecordHandler.getIncrement(position);
 
-        int colorIndex = randy.nextInt(bgColors.length);
-        holder.tvTitle.setText(mRecordHandler.getRecord(position));
-        holder.tvSubTitle.setText(mRecordHandler.getDate(position));
-        //holder.tvTitle.setBackgroundColor(bgColors[colorIndex]);
-        //holder.tvSubTitle.setBackgroundColor(sbgColors[colorIndex]);
+        holder.recordText.setText(mRecordHandler.getRecord(position));
+        holder.dateText.setText(mRecordHandler.getDateFormatted(position));
+
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Not ready", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Not ready", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (increment == -1)
+            holder.incrementText.setText("+0");
+        else
+            holder.incrementText.setText("+"+increment);
 
         if (position == expandedPosition) {
             holder.llExpandArea.setVisibility(View.VISIBLE);
@@ -98,16 +82,20 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
     public void onClick(View view) {
         ViewHolder holder = (ViewHolder) view.getTag();
         String theString = mRecordHandler.getRecord(holder.getPosition());
+        int prev;
 
         // Check for an expanded view, collapse if you find one
         if (expandedPosition >= 0) {
-            int prev = expandedPosition;
+            prev = expandedPosition;
             notifyItemChanged(prev);
         }
+
         // Set the current position to "expanded"
-        expandedPosition = holder.getPosition();
-        notifyItemChanged(expandedPosition);
-        Log.d(TAG, theString);
+        if (expandedPosition == holder.getPosition())
+            expandedPosition = -1;
+        else
+            expandedPosition = holder.getPosition();
+        notifyItemChanged(holder.getPosition());
     }
 
     /**
@@ -115,16 +103,19 @@ public class ElectricityRecyclerViewAdapter extends RecyclerView.Adapter<Electri
      * and data element structure
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle;
-        TextView tvSubTitle;
+        TextView recordText, dateText, incrementText;
+        Button editButton, deleteButton;
         LinearLayout llExpandArea;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvSubTitle = (TextView) itemView.findViewById(R.id.tvSubTitle);
+            recordText = (TextView) itemView.findViewById(R.id.tvTitle);
+            dateText = (TextView) itemView.findViewById(R.id.tvSubTitle);
+            incrementText = (TextView) itemView.findViewById(R.id.textViewElectricIncrease);
             llExpandArea = (LinearLayout) itemView.findViewById(R.id.llExpandArea);
+            editButton = (Button) itemView.findViewById(R.id.btn_edit);
+            deleteButton = (Button) itemView.findViewById(R.id.btn_delete);
         }
     }
 }

@@ -176,6 +176,14 @@ public class ElectricityRecordHandler {
             return null;
     }
 
+    public String getNextSerial() {
+        if (getCount() > 0) {
+            return "" + (Integer.parseInt(get(getInverseIndex(0)).serial) + 1);
+        } else {
+            return "0";
+        }
+    }
+
     public int getIncrement(int idx) {
         if (idx < getCount() - 1)
             return Integer.parseInt(getRecord(idx)) - Integer.parseInt(getRecord(idx+1));

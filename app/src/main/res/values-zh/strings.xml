@@ -22,6 +22,8 @@
     <!-- home activity -->
     <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
     <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
+    <string name="bugreport_permission_request">需要外部儲存空間權限以便寄出錯誤報告</string>
+    <string name="bugreport_permission_not_grant">您的資料無法寄給開發者因為您拒絕了外部儲存空間權限要求</string>
 
     <!-- Electricity activity -->
     <string name="electric_today">今日概覽</string>
@@ -29,13 +31,15 @@
     <string name="electric_last_record">上次讀值</string>
     <string name="electric_current_record_time">最新登入</string>
     <string name="electric_current_record">最新讀值</string>
+    <string name="electric_edit">編輯</string>
+    <string name="electric_delete">刪除</string>
 
     <string name="electric_history">歷史用電</string>
     <string name="electric_button_add">新增資料(Test Only)</string>
     <string name="electric_graph_not_ready">圖表資料尚未更新\n點圖看詳細用電</string>
     <string name="electric_no_data">空空的，增加第一筆吧</string>
 
-    <string name="electric_add">新增用電</string>
+    <string name="electric_add">新增用電 (預設為前一筆)</string>
     <string name="electric_add_info">請輸入您現在的用電值</string>
     <string name="electric_add_next">再新增一筆來比較</string>
     <string name="electric_add_field_holder">現在讀數</string>

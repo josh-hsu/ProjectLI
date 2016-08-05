@@ -319,7 +319,7 @@ public class ElectricityFragment extends MainFragment {
         MaterialDialog builder = new MaterialDialog.Builder(getContext())
                 .title(getString(R.string.electric_add))
                 .inputType(InputType.TYPE_CLASS_NUMBER)
-                .input(getString(R.string.electric_add_field_holder), "", new MaterialDialog.InputCallback() {
+                .input(getString(R.string.electric_add_field_holder), mRecordHandler.getRecord(0), new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         Log.d(TAG, "Get input " + input);
@@ -340,7 +340,7 @@ public class ElectricityFragment extends MainFragment {
         }
 
         try {
-            mRecordHandler.addRecord(new ElectricityRecordParser.Entry("1", targetDate, record));
+            mRecordHandler.addRecord(new ElectricityRecordParser.Entry(mRecordHandler.getNextSerial(), targetDate, record));
             mRecordHandler.refreshFromFile();
             return 0;
         } catch (Exception e) {
