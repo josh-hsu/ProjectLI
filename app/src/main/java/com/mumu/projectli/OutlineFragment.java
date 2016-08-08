@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mumu.projectli.utility.Log;
 
 public class OutlineFragment extends MainFragment {
     private static final String TAG = "OutlineFragment";

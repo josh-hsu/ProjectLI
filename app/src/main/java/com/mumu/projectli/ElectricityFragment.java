@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LineGraph;
 import com.echo.holographlibrary.LinePoint;
+import com.mumu.projectli.utility.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
