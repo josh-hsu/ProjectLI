@@ -7,7 +7,7 @@
     <string name="action_detail">Detail</string>
 
     <!-- project parameters -->
-    <string name="electric_data_file_name">/electric_records.xml</string>
+    <string name="electric_data_file_name">electric_records.xml</string>
 
     <!-- drawer strings -->
     <string name="drawer_title">User Name</string>
@@ -27,6 +27,9 @@
     <string name="home_welcome">So sorry, there is nothing in home page.</string>
     <string name="bugreport_permission_request">We need permission to access external storage.</string>
     <string name="bugreport_permission_not_grant">Your record is not sent to developer because you denied the permission request.</string>
+    <string name="bugreport_subject">Daily Book Bugreport</string>
+    <string name="bugreport_send_out_via">Send out mail via ..</string>
+    <string name="bugreport_context">Briefly describe the bug you found or suggestions to this APP: \n</string>
     
     <!-- Electricity activity -->
     <string name="electric_today">Today</string>

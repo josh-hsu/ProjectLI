@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MoneyFragment.OnFragmentInteractionListener,
         ElectricityFragment.OnFragmentInteractionListener,
-        OutlineFragment.OnFragmentInteractionListener {
+        OutlineFragment.OnFragmentInteractionListener,
+        WeightFragment.OnFragmentInteractionListener {
 
     public static final int FRAG_IDX_OUTLINE = 0;
     public static final int FRAG_IDX_MONEY= 1;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity
     private View mCoordinateLayoutView;
     private List<MainFragment> mFragmentList;
     private MainFragment mCurrentPresentFragment;
-    private static boolean mDrawOnce = true;
     private boolean mShouldStartBugReport = false;
 
     @Override
@@ -78,12 +78,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        if (mDrawOnce) {
-            Snackbar.make(mCoordinateLayoutView, getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            mDrawOnce = false;
-        }
 
         showOutlineFragment();
     }
@@ -256,9 +250,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void startBugReportActivity() {
-        String userDataPath = getFilesDir().getAbsolutePath() + getString(R.string.electric_data_file_name);
+        File file_electricity = new File(Environment.getExternalStorageDirectory(), getString(R.string.electric_data_file_name));
+        Uri path_electricity = Uri.fromFile(file_electricity);
+        File file_log = new File(Environment.getExternalStorageDirectory(), "log.txt");
+        Uri path_log = Uri.fromFile(file_log);
+        String to[] = {"alenbos0517@gmail.com"};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+
+        saveDataFileToSdcard(getString(R.string.electric_data_file_name));
+        saveDataFileToSdcard("log.txt");
+        emailIntent.setType("vnd.android.cursor.dir/email");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.bugreport_subject));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.bugreport_context));
+
+        ArrayList<Uri> uris = new ArrayList<>();
+        uris.add(path_electricity);
+        uris.add(path_log);
+        emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+
+        startActivity(Intent.createChooser(emailIntent , getString(R.string.bugreport_send_out_via)));
+
+        mShouldStartBugReport = false;
+    }
+
+    private void saveDataFileToSdcard(String filename) {
+        String userDataPath = getFilesDir().getAbsolutePath() + "/" + filename;
         File srcFile = new File(userDataPath);
-        String destFilePath = Environment.getExternalStorageDirectory() + "/electricity_records.xml";
+        String destFilePath = Environment.getExternalStorageDirectory() + "/" + filename;
 
         InputStream in = null;
         OutputStream out = null;
@@ -292,18 +311,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }
-
-        File file = new File(Environment.getExternalStorageDirectory(), "electricity_records.xml");
-        Uri path = Uri.fromFile(file);
-        String to[] = {"alenbos0517@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setType("vnd.android.cursor.dir/email");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "問題回報");
-        startActivity(Intent.createChooser(emailIntent , "寄出信件使用..."));
-
-        mShouldStartBugReport = false;
     }
 
 }

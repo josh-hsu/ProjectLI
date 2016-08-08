@@ -25,6 +25,9 @@
     <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
     <string name="bugreport_permission_request">需要外部儲存空間權限以便寄出錯誤報告</string>
     <string name="bugreport_permission_not_grant">您的資料無法寄給開發者因為您拒絕了外部儲存空間權限要求</string>
+    <string name="bugreport_subject">每日記錄問題回報</string>
+    <string name="bugreport_send_out_via">選擇 APP 來寄出 ..</string>
+    <string name="bugreport_context">簡單陳述您遇到的問題或是任何意見：\n</string>
 
     <!-- Electricity activity -->
     <string name="electric_today">今日概覽</string>

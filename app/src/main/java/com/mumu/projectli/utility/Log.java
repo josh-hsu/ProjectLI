@@ -1,5 +1,12 @@
 package com.mumu.projectli.utility;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  * Log saves logs to local buffer file and also outputs to logcat
  */
@@ -37,7 +44,43 @@ public final class Log {
     }
 
     private static void saveLogToFile(String tag, String msg, int level) {
+        String log = logFormatted(tag, msg, level);
+        try {
+            FileOutputStream fos = new FileOutputStream("/data/data/com.mumu.projectli/files/log.txt", true);
+            fos.write(log.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    private static String logFormatted(String tag, String msg, int level) {
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd a hh:mm", Locale.getDefault());
+        String thisTime = df.format(Calendar.getInstance().getTime());
+        return String.format("%18s: [%s] %s: %s\n", thisTime, getLevelString(level), tag, msg);
+    }
+
+    private static String getLevelString(int level) {
+        String ret = "";
+
+        switch (level) {
+            case DEBUG:
+                ret = "DEBG";
+                break;
+            case WARN:
+                ret = "WARN";
+                break;
+            case INFO:
+                ret = "INFO";
+                break;
+            case ERROR:
+                ret = "ERRO";
+                break;
+            case VERBOSE:
+                ret = "VRBS";
+                break;
+        }
+        return ret;
     }
 
 }

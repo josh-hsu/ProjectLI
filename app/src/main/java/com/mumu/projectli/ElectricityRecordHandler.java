@@ -1,7 +1,8 @@
 package com.mumu.projectli;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.mumu.projectli.utility.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,7 +48,7 @@ public class ElectricityRecordHandler {
 
     private void init() {
         InputStream userDataStream;
-        String userDataPath = mDataDirectory + mContext.getString(R.string.electric_data_file_name);
+        String userDataPath = mDataDirectory + "/" +mContext.getString(R.string.electric_data_file_name);
 
         try {
             userDataStream = new FileInputStream(userDataPath);
