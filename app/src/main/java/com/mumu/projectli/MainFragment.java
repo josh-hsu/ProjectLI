@@ -8,7 +8,8 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * Created by josh on 2016/7/8.
+ * MainFragment is a type of Fragment that organizes all abstract
+ * functions to be implemented by its children
  */
 public class MainFragment extends Fragment {
     final static String TAG = "MainFragment";
@@ -19,6 +20,10 @@ public class MainFragment extends Fragment {
     }
 
     public void onDetailClick() {
+        // Do nothing here , only in derived classes
+    }
+
+    public void onSettingClick() {
         // Do nothing here , only in derived classes
     }
 

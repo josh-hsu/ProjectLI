@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -152,14 +153,15 @@ public class ElectricityRecordHandler {
             Calendar today = Calendar.getInstance();
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
-            DateFormat timeFormatter = new SimpleDateFormat("hh:mma");
+            DateFormat timeFormatter = new SimpleDateFormat("a hh:mm", Locale.getDefault());
+            DateFormat defaultFormatter = new SimpleDateFormat("yyyy/MM/dd a hh:mm", Locale.getDefault());
 
             if (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
                 return mContext.getString(R.string.electric_graphic_today) + " " + timeFormatter.format(df);
             } else if (calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
                 return mContext.getString(R.string.electric_graphic_yesterday) + " " + timeFormatter.format(df);
             } else {
-                return df.toString();
+                return defaultFormatter.format(df);
             }
         } catch (ParseException e) {
             Log.e(TAG, "Parsing date string failed");

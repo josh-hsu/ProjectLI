@@ -27,7 +27,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@mipmap/ic_josh_image"
+            android:src="@mipmap/ic_drawer_image"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 

@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity
         ElectricityFragment.OnFragmentInteractionListener,
         OutlineFragment.OnFragmentInteractionListener {
 
+    public static final int FRAG_IDX_OUTLINE = 0;
+    public static final int FRAG_IDX_MONEY= 1;
+    public static final int FRAG_IDX_ELECTRICITY = 2;
+    public static final int FRAG_IDX_WEIGHT = 3;
+
     private FloatingActionButton mFab;
     private View mCoordinateLayoutView;
     private List<MainFragment> mFragmentList;
@@ -54,16 +59,7 @@ public class MainActivity extends AppCompatActivity
         mCoordinateLayoutView = findViewById(R.id.coordinator_layout);
 
         // construct fragment list
-        mFragmentList = new ArrayList<>();
-        try {
-            mFragmentList.add(ElectricityFragment.class.newInstance());
-            mFragmentList.add(MoneyFragment.class.newInstance());
-            mFragmentList.add(OutlineFragment.class.newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        initFragmentList();
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -141,16 +137,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_outline) {
-            fragment = mFragmentList.get(2);
+            fragment = mFragmentList.get(FRAG_IDX_OUTLINE);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_outline));
         } else if (id == R.id.nav_money) {
-            fragment = mFragmentList.get(1);
+            fragment = mFragmentList.get(FRAG_IDX_MONEY);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_money));
         } else if (id == R.id.nav_electricity) {
-            fragment = mFragmentList.get(0);
+            fragment = mFragmentList.get(FRAG_IDX_ELECTRICITY);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_electricity));
         } else if (id == R.id.nav_bodyweight) {
-            fragment = mFragmentList.get(1);
+            fragment = mFragmentList.get(FRAG_IDX_WEIGHT);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_body_weight));
         } else if (id == R.id.nav_share) {
             fragment = null;
@@ -207,6 +203,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void initFragmentList() {
+        mFragmentList = new ArrayList<>();
+        try {
+            mFragmentList.add(FRAG_IDX_OUTLINE, OutlineFragment.class.newInstance());
+            mFragmentList.add(FRAG_IDX_MONEY, MoneyFragment.class.newInstance());
+            mFragmentList.add(FRAG_IDX_ELECTRICITY, ElectricityFragment.class.newInstance());
+            mFragmentList.add(FRAG_IDX_WEIGHT, WeightFragment.class.newInstance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public FloatingActionButton getFab() {
         return mFab;
     }
@@ -229,7 +237,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         ActionBar actionBar = getSupportActionBar();
 
-        fragment = mFragmentList.get(2);
+        fragment = mFragmentList.get(FRAG_IDX_OUTLINE);
         if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_outline));
 
         if (fragment != null) {

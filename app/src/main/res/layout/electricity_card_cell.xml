@@ -57,7 +57,10 @@
                 android:textSize="18sp"
                 android:textColor="#EC407A"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/tvTitle"
+                android:layout_alignParentStart="false"
+                android:textAlignment="viewEnd" />
 
             <ImageView
                 android:layout_width="wrap_content"
