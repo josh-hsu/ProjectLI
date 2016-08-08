@@ -6,7 +6,7 @@
 
 ##測試版本
 
-* 版本: 0.2 (2016-08-05)
+* 版本: 0.3a (2016-08-08)
 * 下載: https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/app-debug.apk?raw=true
 
 ##已知問題
