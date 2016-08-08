@@ -1,3 +1,5 @@
+![Screenshots](https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/combined.png?raw=true)
+
 # 每日筆記本
 
 這裡會放 Beta 版的 APK 檔案，請用手機下載直接安裝即可
@@ -13,7 +15,3 @@
 * 圖表座標軸目前未顯示
 * 以後會有使用提示
 
-![Screenshots](https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/Screenshot_1.png?raw=true)
-![Screenshots](https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/Screenshot_2.png?raw=true)
-![Screenshots](https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/Screenshot_3.png?raw=true)
-![Screenshots](https://github.com/josh-hsu/ProjectLI/blob/master/beta_release/Screenshot_48.png?raw=true)
