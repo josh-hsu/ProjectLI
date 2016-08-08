@@ -57,6 +57,15 @@
     <string name="electric_graphic_today">Today</string>
     <string name="electric_graphic_yesterday">Yesterday</string>
 
+    <!-- Outline fragment -->
+    <string name="outline_money">Money</string>
+    <string name="outline_money_available">Available</string>
+    <string name="outline_money_status_rich">Rich</string>
+    <string name="outline_money_status_normal">Normal</string>
+    <string name="outline_money_status_eat_dust">Eat dust</string>
+    <string name="outline_electricity_used">Used</string>
+    <string name="outline_electricity_available">Available</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

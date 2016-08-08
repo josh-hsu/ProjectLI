@@ -2,12 +2,18 @@ package com.mumu.projectli;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.echo.holographlibrary.Line;
+import com.echo.holographlibrary.LineGraph;
+import com.echo.holographlibrary.LinePoint;
+import com.echo.holographlibrary.PieGraph;
+import com.echo.holographlibrary.PieSlice;
 import com.mumu.projectli.utility.Log;
 
 public class OutlineFragment extends MainFragment {
@@ -16,6 +22,9 @@ public class OutlineFragment extends MainFragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+
+    private PieGraph mMoneyGraph;
+    private LineGraph mBodyWeightGraph;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,5 +98,51 @@ public class OutlineFragment extends MainFragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        prepareView(view);
+    }
+
+    private void prepareView(View view) {
+        mMoneyGraph = (PieGraph) view.findViewById(R.id.graphMoney);
+        mBodyWeightGraph = (LineGraph) view.findViewById(R.id.graphBodyWeight);
+        drawFakeChart();
+    }
+
+    private void drawFakeChart() {
+        PieSlice slice = new PieSlice();
+        slice.setColor(Color.parseColor("#99CC00"));
+        slice.setValue(2);
+        slice.setTitle("可用");
+        mMoneyGraph.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(Color.parseColor("#FFBB33"));
+        slice.setValue(3);
+        slice.setTitle("男人");
+        mMoneyGraph.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(Color.parseColor("#AA66CC"));
+        slice.setValue(8);
+        slice.setTitle("食物");
+        mMoneyGraph.addSlice(slice);
+
+        Line l = new Line();
+        mBodyWeightGraph.removeAllLines();
+        mBodyWeightGraph.showHorizontalGrid(true);
+        mBodyWeightGraph.showMinAndMaxValues(true);
+
+        for (int i = 0; i < 10; i ++) {
+            LinePoint p = new LinePoint();
+            p.setX(i);
+            p.setY(73-i);
+            l.addPoint(p);
+        }
+        l.setColor(Color.parseColor("#FFBB33"));
+
+        mBodyWeightGraph.addLine(l);
+        mBodyWeightGraph.setRangeY(50, 80);
+        mBodyWeightGraph.setLineToFill(0);
     }
 }

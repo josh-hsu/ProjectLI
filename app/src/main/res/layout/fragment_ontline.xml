@@ -9,17 +9,138 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <!-- Money -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewMoneyIcon"
+                android:src="@drawable/ic_menu_money"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="18sp"
+                android:text="八月"
+                android:id="@+id/textViewMonth"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <com.echo.holographlibrary.PieGraph
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:layout_below="@+id/textViewMonth"
+                android:text="ddd"
+                android:id="@+id/graphMoney"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="這是首頁"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="可用: 12302$\n\n食物:  8703$\n雜貨:    894$\n交通:    200$"
                 android:id="@+id/textViewElectricLastRecord"
-                android:textSize="40sp"
-                android:layout_marginTop="50dp"
+                android:textSize="22sp"
+                android:layout_marginTop="120dp"
                 android:gravity="center"
                 android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="離發薪水還有 20 天\n這樣下去 15 天後要吃土了"
+                android:id="@+id/textViewMoneyOutline"
+                android:textAlignment="center"
+                android:layout_below="@+id/graphMoney"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+            <!-- Electricity -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageViewElectricityIcon"
+                android:src="@drawable/ic_electricity"
+                android:layout_below="@+id/textViewMoneyOutline"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20%"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:layout_marginRight="20sp"
+                android:layout_marginLeft="20sp"
+                android:background="@drawable/electricity_bargraph_prototype"
+                android:id="@+id/textViewElectricBarView"
+                android:layout_below="@+id/imageViewElectricityIcon"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="10dp"
+                android:text="離月底還有 15 天，目前用電狀況很節省\n已用 40 / 可用 200"
+                android:id="@+id/textViewElectricityOutline"
+                android:textAlignment="center"
+                android:layout_below="@+id/textViewElectricBarView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
+            <!-- Body weight -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/imageViewBodyWeightIcon"
+                android:src="@drawable/ic_menu_body_weight"
+                android:layout_below="@+id/textViewElectricityOutline"
+                android:layout_alignParentStart="true" />
+
+            <com.echo.holographlibrary.LineGraph
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/imageViewBodyWeightIcon"
+                android:id="@+id/graphBodyWeight"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/imageViewBodyWeightIcon"
+                android:textSize="30sp"
+                android:maxLines="3"
+                android:textAlignment="center"
+                android:text="詳細資料目前無法提供"
+                android:textColor="#DCDCDC"
+                android:id="@+id/textViewBodyWeightGraphDetail"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/graphBodyWeight" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="10dp"
+                android:text="體重目前趨勢每天增加約 0.02 公斤\n目前來到最高點 69.5 公斤"
+                android:id="@+id/textViewBodyWeightOutline"
+                android:textAlignment="center"
+                android:layout_below="@+id/graphBodyWeight"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
+
 
         </RelativeLayout>
     </ScrollView>
