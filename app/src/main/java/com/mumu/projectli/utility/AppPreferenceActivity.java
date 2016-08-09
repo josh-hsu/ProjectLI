@@ -16,43 +16,52 @@
 
 package com.mumu.projectli.utility;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import android.os.Environment;
 import android.preference.PreferenceActivity;
-import android.provider.Settings;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mumu.projectli.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+
 public class AppPreferenceActivity extends PreferenceActivity {
-    public static String TAG = "ProjectLI";
-    private static boolean mInitialized = false;
-    private SharedPreferences prefs;
-    private SharedPreferences.OnSharedPreferenceChangeListener spChanged;
-    private Preference enableServicePreference;
-    private Preference configSkillNormalPreference;
-    private Preference configSkillGoldenPreference;
-    private ListPreference battleStagePreference;
+    public static final String TAG = "ProjectLI";
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load the preferences from an XML file
-        addPreferencesFromResource(R.xml.preferences);
-
-        // Prepare for button-like preference
-        prepareButtonListener();
+        // Add a button to the header list.
+        if (hasHeaders()) {
+            Log.d(TAG, "Launched App preference header");
+            Button button = new Button(this);
+            button.setText(getString(R.string.settings_restore_data_from_sdcard));
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    restoreDataFromSdcard();
+                }
+            });
+            setListFooter(button);
+        }
     }
 
     @Override
@@ -72,138 +81,112 @@ public class AppPreferenceActivity extends PreferenceActivity {
         bar.setTitleTextColor(Color.WHITE);
     }
 
+    /**
+     * Populate the activity with the top-level headers.
+     */
     @Override
-    public void onResume() {
-        super.onResume();  // Always call the superclass method first
-
-        // Add preference changed event listener, this must be called before XML loaded.
-        prefs = this.getSharedPreferences("com.mumu.projectli_preferences", MODE_PRIVATE);
-        spChanged = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                                  String key) {
-                Log.d(TAG, key + " changed");
-                handlePreferenceEvent(key);
-            }
-        };
-        prefs.registerOnSharedPreferenceChangeListener(spChanged);
-        prepareDefaultPropertySetup();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        prefs.unregisterOnSharedPreferenceChangeListener(spChanged);
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.preference_header, target);
     }
 
     /*
-     * This must be called after preference activity is loaded
+     * Since API 19, PreferenceActivity must implement isValidFragment if it is initiated from
+     * PACKAGE_NAME.PREF_ACTIVITY$FRAG_SUBCLASS
      */
-    private void prepareButtonListener() {
-        enableServicePreference = findPreference("enableServicePref");
-        configSkillNormalPreference = findPreference("normal_skill");
-        configSkillGoldenPreference = findPreference("golden_skill");
-        battleStagePreference = (ListPreference) findPreference("battle_stage");
-
-        configSkillNormalPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent=new Intent();
-                //intent.setClass(AppPreferenceActivity.this, SkillSettingActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-
-        configSkillGoldenPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent=new Intent();
-                //intent.setClass(AppPreferenceActivity.this, SkillSettingActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-        configSkillGoldenPreference.setEnabled(false);
-
-        enableServicePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    //Toast.makeText(AppPreferenceActivity.this, R.string.startup_permit_system_alarm, Toast.LENGTH_SHORT).show();
-                    if (!Settings.canDrawOverlays(AppPreferenceActivity.this)) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                Uri.parse("package:" + getPackageName()));
-                        startActivityForResult(intent, 10);
-                    } else {
-                        //Toast.makeText(AppPreferenceActivity.this, R.string.headservice_how_to_stop, Toast.LENGTH_SHORT).show();
-                        //startService(new Intent(AppPreferenceActivity.this, HeadService.class));
-                    }
-                } else {
-                    //Toast.makeText(AppPreferenceActivity.this, R.string.headservice_how_to_stop, Toast.LENGTH_SHORT).show();
-                    //startService(new Intent(AppPreferenceActivity.this, HeadService.class));
-                }
-                return true;
-            }
-        });
-
-        mInitialized = true;
+    @Override
+    protected boolean isValidFragment (String fragmentName) {
+        return true;
     }
 
-    private boolean isSkillValid(String skill) {
-        int number;
-        try {
-            number = Integer.parseInt(skill);
-            Log.d(TAG, "Skill parse to " + number);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+    /**
+     * This fragment shows the preferences for the first header.
+     */
+    public static class Prefs1Fragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Make sure default values are applied.  In a real app, you would
+            // want this in a shared function that is used to retrieve the
+            // SharedPreferences wherever they are needed.
+            PreferenceManager.setDefaultValues(getActivity(),
+                    R.xml.preferences, false);
+
+            // Load the preferences from an XML resource
+            addPreferencesFromResource(R.xml.preferences);
         }
     }
 
-    /*
-     * Handle all default property setup
-     */
-    private void prepareDefaultPropertySetup() {
-        // Set initialize state to false for safety
-        mInitialized = false;
-
-        // Set it to preference
-        SharedPreferences appPrefs =
-                getSharedPreferences("com.mumu.projectli_preferences", MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = appPrefs.edit();
-
-        // Battle Skill Setting
-        String normalSkill = "145";
-        Log.d(TAG, "Normal Skill: " + normalSkill);
-        if (normalSkill.length() >= 3)
-            configSkillNormalPreference.setSummary(normalSkill.charAt(0) + " > " +
-                normalSkill.charAt(1) + " > " + (normalSkill.charAt(2)));
-        else
-            configSkillNormalPreference.setSummary("技能尚未設定");
-        //configSkillGoldenPreference.setSummary("技能尚未設定");
-
-        // Service status
-        enableServicePreference.setEnabled(true);
-
-        prefsEditor.apply();
-
-        mInitialized = true;
+    void restoreDataFromSdcard() {
+        MaterialDialog builder = new MaterialDialog.Builder(this)
+                .title(getString(R.string.settings_restore_title))
+                .content(getString(R.string.settings_restore_subtitle))
+                .positiveText(getString(R.string.action_confirm))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        doRestoreDataFromSdcard();
+                    }
+                })
+                .negativeText(getString(R.string.action_cancel)).show();
     }
 
-    /*
-     * Handle all the preference change events
-     */
-    private void handlePreferenceEvent(String key) {
-        Log.d(TAG, "Changed: " + key);
-
-        // If we are preparing the view by getting property for the fist time. Don't do anything here.
-        if (!mInitialized) {
-            Log.d(TAG, "System is in initializing phase, skip " + key + " changed.");
+    void doRestoreDataFromSdcard() {
+        try {
+            saveSdcardFileToData(getString(R.string.electric_data_file_name));
+        } catch (FileNotFoundException e) {
+            Log.w(TAG, "Try to restore data from sdcard but no backup file found");
+            new MaterialDialog.Builder(this)
+                    .title(getString(R.string.settings_restore_failed))
+                    .content(getString(R.string.settings_restore_not_found))
+                    .negativeText(getString(R.string.action_cancel)).show();
             return;
         }
 
-        prepareDefaultPropertySetup();
+        new MaterialDialog.Builder(this)
+                .title(getString(R.string.settings_restore_title))
+                .content(getString(R.string.settings_restore_finished))
+                .negativeText(getString(R.string.action_confirm)).show();
+    }
+
+    public void saveSdcardFileToData(String filename) throws FileNotFoundException {
+        String userSdcardPath = Environment.getExternalStorageDirectory() + "/" + filename;
+        File srcFile = new File(userSdcardPath);
+        String destFilePath = getFilesDir().getAbsolutePath() + "/" + filename;
+
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(new File(destFilePath));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+        } catch (FileNotFoundException e) {
+            throw e;
+        } catch (IOException e) {
+            Log.e(TAG, "Save " + filename + " to data failed: " + e.getMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
 

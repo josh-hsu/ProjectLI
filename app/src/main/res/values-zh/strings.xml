@@ -6,6 +6,10 @@
 
     <string name="action_settings">設定</string>
     <string name="action_detail">所有資料</string>
+    <string name="action_yes">是</string>
+    <string name="action_no">否</string>
+    <string name="action_confirm">確定</string>
+    <string name="action_cancel">取消</string>
 
     <!-- drawer -->
     <string name="drawer_title">您</string>
@@ -50,5 +54,15 @@
     <string name="electric_graphic_touch_to_see_detail">觸摸數據點來看詳細資料</string>
     <string name="electric_graphic_today">今天</string>
     <string name="electric_graphic_yesterday">昨天</string>
+
+    <!-- Settings -->
+    <string name="settings_fragment_title_1">帳號設定</string>
+    <string name="settings_fragment_summary_1">連結您的 Google 或是 Dropbox 帳號以便保存資料至雲端。</string>
+    <string name="settings_restore_data_from_sdcard">恢復資料\n(使用問題回報來備份)</string>
+    <string name="settings_restore_title">恢復上次備份</string>
+    <string name="settings_restore_subtitle">注意！您即將恢復上次備份資料，從上個備份至今你輸入的資料將會遺失。確定嗎？</string>
+    <string name="settings_restore_failed">備份失敗</string>
+    <string name="settings_restore_not_found">抱歉，在裝置上找不到任何備份資料。</string>
+    <string name="settings_restore_finished">備份資料已成功復原。</string>
 
 </resources>
