@@ -7,11 +7,9 @@
     <string name="action_settings">設定</string>
     <string name="action_detail">所有資料</string>
 
-    <!-- drawer strings -->
+    <!-- drawer -->
     <string name="drawer_title">您</string>
-    <string name="drawer_subtitle">joshhsu1002@gmail.com</string>
-
-    <!-- drawer menu -->
+    <string name="drawer_subtitle">tarm55218@gmail.com</string>
     <string name="drawer_outline">首頁</string>
     <string name="drawer_money">記帳</string>
     <string name="drawer_electricity">電表</string>
@@ -21,8 +19,6 @@
     <string name="drawer_share">分享給 ... </string>
 
     <!-- home activity -->
-    <string name="home_title">哎呀，這是搶先預覽版本，所以這邊還在施工中，請先點左上方選單，記錄您的電表．</string>
-    <string name="home_welcome">真是抱歉這邊空空的，麻煩先點左上方選單（亦可由螢幕的左側往右滑）．</string>
     <string name="bugreport_permission_request">需要外部儲存空間權限以便寄出錯誤報告</string>
     <string name="bugreport_permission_not_grant">您的資料無法寄給開發者因為您拒絕了外部儲存空間權限要求</string>
     <string name="bugreport_subject">每日記錄問題回報</string>

@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.mumu.projectli.utility.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         OutlineFragment.OnFragmentInteractionListener,
         WeightFragment.OnFragmentInteractionListener {
 
+    public static final String TAG = "ProjectLI";
     public static final int FRAG_IDX_OUTLINE = 0;
     public static final int FRAG_IDX_MONEY= 1;
     public static final int FRAG_IDX_ELECTRICITY = 2;
@@ -62,13 +65,6 @@ public class MainActivity extends AppCompatActivity
         initFragmentList();
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, getString(R.string.home_welcome), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -190,6 +186,7 @@ public class MainActivity extends AppCompatActivity
                     startBugReportActivity();
                 } else {
                     Toast.makeText(this, getString(R.string.bugreport_permission_not_grant), Toast.LENGTH_LONG).show();
+                    Log.w(TAG, "User didn't give us permission to send out bugreport");
                 }
                 break;
             default:
@@ -205,6 +202,7 @@ public class MainActivity extends AppCompatActivity
             mFragmentList.add(FRAG_IDX_ELECTRICITY, ElectricityFragment.class.newInstance());
             mFragmentList.add(FRAG_IDX_WEIGHT, WeightFragment.class.newInstance());
         } catch (Exception e) {
+            Log.e(TAG, "init fragment list failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -222,8 +220,10 @@ public class MainActivity extends AppCompatActivity
         String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE"};
         int permsRequestCode = 200;
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            Log.d(TAG, "This is device software version above Marshmallow, requesting permission of external storage");
             requestPermissions(perms, permsRequestCode);
+        }
     }
 
     private void showOutlineFragment() {
@@ -293,12 +293,12 @@ public class MainActivity extends AppCompatActivity
                 out.write(bytes, 0, read);
             }
         } catch (IOException e) {
+            Log.e(TAG, "Save " + filename + " to sdcard failed: " + e.getMessage());
             e.printStackTrace();
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                    in = null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

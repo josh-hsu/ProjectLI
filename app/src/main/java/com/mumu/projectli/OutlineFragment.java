@@ -17,7 +17,7 @@ import com.echo.holographlibrary.PieSlice;
 import com.mumu.projectli.utility.Log;
 
 public class OutlineFragment extends MainFragment {
-    private static final String TAG = "OutlineFragment";
+    private static final String TAG = "ProjectLI";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;

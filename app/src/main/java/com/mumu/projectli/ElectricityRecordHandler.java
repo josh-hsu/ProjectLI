@@ -61,7 +61,7 @@ public class ElectricityRecordHandler {
             mHistoryList = new ElectricityRecordParser().parse(userDataStream);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "Parsing XML file failed. Fetching xml to developer.");
+            Log.e(TAG, "Parsing XML file failed. Fetching xml to developer." + e.getMessage());
             return;
         }
         Log.d(TAG, "xml data:");
@@ -165,7 +165,7 @@ public class ElectricityRecordHandler {
                 return defaultFormatter.format(df);
             }
         } catch (ParseException e) {
-            Log.e(TAG, "Parsing date string failed");
+            Log.e(TAG, "Parsing date string failed " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -196,7 +196,7 @@ public class ElectricityRecordHandler {
 
     // Record operation
     public boolean addRecord (ElectricityRecordParser.Entry record) throws Exception {
-        String userDataPath = mDataDirectory + mContext.getString(R.string.electric_data_file_name);
+        String userDataPath = mDataDirectory + "/" + mContext.getString(R.string.electric_data_file_name);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document document = documentBuilder.parse(new File(userDataPath));

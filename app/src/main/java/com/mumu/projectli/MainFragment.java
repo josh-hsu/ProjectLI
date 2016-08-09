@@ -13,7 +13,7 @@ import com.mumu.projectli.utility.Log;
  * functions to be implemented by its children
  */
 public class MainFragment extends Fragment {
-    final static String TAG = "MainFragment";
+    final static String TAG = "ProjectLI";
     protected FloatingActionButton mFab;
 
     public void onFabClick(View view){

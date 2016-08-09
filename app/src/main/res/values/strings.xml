@@ -9,11 +9,9 @@
     <!-- project parameters -->
     <string name="electric_data_file_name">electric_records.xml</string>
 
-    <!-- drawer strings -->
+    <!-- drawer -->
     <string name="drawer_title">User Name</string>
     <string name="drawer_subtitle">User Email</string>
-
-    <!-- drawer menu -->
     <string name="drawer_outline">Outline</string>
     <string name="drawer_money">Accounting</string>
     <string name="drawer_electricity">Electricity</string>
@@ -23,8 +21,6 @@
     <string name="drawer_share">Share to ..</string>
 
     <!-- home activity -->
-    <string name="home_title">Sorry, this is preview App. This page is no ready yet.</string>
-    <string name="home_welcome">So sorry, there is nothing in home page.</string>
     <string name="bugreport_permission_request">We need permission to access external storage.</string>
     <string name="bugreport_permission_not_grant">Your record is not sent to developer because you denied the permission request.</string>
     <string name="bugreport_subject">Daily Book Bugreport</string>

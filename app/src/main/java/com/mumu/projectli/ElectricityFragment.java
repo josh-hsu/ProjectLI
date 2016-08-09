@@ -24,6 +24,7 @@ import com.mumu.projectli.utility.Log;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 /**
@@ -287,7 +288,7 @@ public class ElectricityFragment extends MainFragment {
             p.setY(0);
             l.addPoint(p);
         }
-        l.setColor(Color.parseColor("#FFBB33"));
+        l.setColor(Color.parseColor("#CCCCCC"));
 
         mLineGraph.addLine(l);
         mLineGraph.setRangeY(-5, 22);
@@ -333,7 +334,7 @@ public class ElectricityFragment extends MainFragment {
         String targetDate;
 
         if (date.equals("NOW")) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
             targetDate = df.format(Calendar.getInstance().getTime());
         } else {
             targetDate = date;
@@ -345,7 +346,7 @@ public class ElectricityFragment extends MainFragment {
             return 0;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(TAG, "Fail to add record " + e.getMessage());
+            Log.e(TAG, "Fail to add record " + e.getMessage());
         }
 
         return -1;
