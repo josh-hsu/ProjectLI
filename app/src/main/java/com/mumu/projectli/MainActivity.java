@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.mumu.projectli.utility.AppPreferenceActivity;
 import com.mumu.projectli.utility.Log;
 
 import java.io.File;
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Not yet", Toast.LENGTH_SHORT).show();
+            startPreferenceActivity();
             return true;
         } else if (id == R.id.action_detail) {
             if (mCurrentPresentFragment != null) {
@@ -205,6 +206,12 @@ public class MainActivity extends AppCompatActivity
             Log.e(TAG, "init fragment list failed: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void startPreferenceActivity() {
+        Intent intent=new Intent();
+        intent.setClass(MainActivity.this, AppPreferenceActivity.class);
+        startActivity(intent);
     }
 
     public FloatingActionButton getFab() {
