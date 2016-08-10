@@ -78,13 +78,13 @@
 
 
     <!-- Record Analysis -->
-    <string name="record_summary_no_data">Sorry, you haven't enter any record.</string>
-    <string name="record_summary_one_data">You have only one record at %s and the used %d electricity.</string>
-    <string name="record_summary_data">You have used %d electricity in this month, %s</string>
-    <string name="record_summary_avaiable">Used %d | Remain %d</string>
+    <string name="record_summary_no_data">Sorry, you haven\'t enter any record.</string>
+    <string name="record_summary_one_data" formatted="false">You have only one record at %s and the used %d electricity.</string>
+    <string name="record_summary_data" formatted="false">You have used %d electricity in this month, %s</string>
+    <string name="record_summary_avaiable" formatted="false">Used %d | Remain %d</string>
     <string name="record_summary_electricity_good">you are doing a very good job.</string>
     <string name="record_summary_electricity_fine">this seems good.</string>
     <string name="record_summary_electricity_bitter">it seems you used more than expect.</string>
     <string name="record_summary_electricity_bad">you have used too much electricity, try turing off air condition.</string>
-    <string name="record_summary_electricity_avaiable_rest">You only have %d available in the rest of days.</string>
+    <string name="record_summary_electricity_avaiable_rest" formatted="false">You only have %d available in the rest of days.</string>
 </resources>
