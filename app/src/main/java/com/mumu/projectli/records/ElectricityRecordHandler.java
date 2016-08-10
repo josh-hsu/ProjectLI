@@ -1,7 +1,8 @@
-package com.mumu.projectli;
+package com.mumu.projectli.records;
 
 import android.content.Context;
 
+import com.mumu.projectli.R;
 import com.mumu.projectli.utility.Log;
 
 import org.w3c.dom.Document;
@@ -228,5 +229,47 @@ public class ElectricityRecordHandler {
         transformer.transform(source, result);
 
         return true;
+    }
+
+    public boolean removeRecord(int serial) {
+        return false;
+    }
+
+    public boolean editRecord(int serial, ElectricityRecordParser.Entry entry) {
+        return false;
+    }
+
+    // analysis
+    public String getSummary() {
+        String summary = "";
+
+        if (getCount() == 0) {
+            summary = mContext.getString(R.string.record_summary_no_data);
+        } else if (getCount() == 1) {
+            summary = mContext.getString(R.string.record_summary_one_data);
+        } else if (getCount() > 1) {
+            summary = mContext.getString(R.string.record_summary_data);
+        } else {
+            Log.e(TAG, "WTF! negative count of data.");
+            summary = "WTF! negative count of data ...";
+        }
+
+        return summary;
+    }
+
+    public int getMaxRecord() {
+        return 0;
+    }
+
+    public int getAvailable() {
+        return 0;
+    }
+
+    public int getRestOfDaysThisMonth() {
+        return 0;
+    }
+
+    public int getUsedThisMonth() {
+        return 0;
     }
 }

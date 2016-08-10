@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.mumu.projectli.records.ElectricityRecordHandler;
+
 /**
  * ElectricityBottomSheet class holds the view of total usage data
  *

@@ -1,4 +1,4 @@
-package com.mumu.projectli;
+package com.mumu.projectli.records;
 
 import android.util.Xml;
 

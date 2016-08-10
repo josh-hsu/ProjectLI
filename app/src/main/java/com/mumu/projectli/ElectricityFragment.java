@@ -19,6 +19,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LineGraph;
 import com.echo.holographlibrary.LinePoint;
+import com.mumu.projectli.records.ElectricityRecordHandler;
+import com.mumu.projectli.records.ElectricityRecordParser;
 import com.mumu.projectli.utility.Log;
 
 import java.text.DateFormat;

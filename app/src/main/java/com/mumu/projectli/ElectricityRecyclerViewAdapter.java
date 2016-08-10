@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mumu.projectli.records.ElectricityRecordHandler;
+
 /**
  * Created by josh on 2016/7/24.
  */

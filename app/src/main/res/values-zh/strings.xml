@@ -65,4 +65,15 @@
     <string name="settings_restore_not_found">抱歉，在裝置上找不到任何備份資料。</string>
     <string name="settings_restore_finished">備份資料已成功復原。</string>
 
+    <!-- Record Analysis -->
+    <string name="record_summary_no_data">抱歉，您還沒增加任何資料</string>
+    <string name="record_summary_one_data">您只有一筆在 %s 使用了 %d 度</string>
+    <string name="record_summary_data">您這個月已經用了 %d 度，%s</string>
+    <string name="record_summary_avaiable">已用 %d | 可用 %d</string>
+    <string name="record_summary_electricity_good">真會省電，表現很好</string>
+    <string name="record_summary_electricity_fine">看起來還不錯</string>
+    <string name="record_summary_electricity_bitter">看起來你用了超過預期一點點</string>
+    <string name="record_summary_electricity_bad">看起來你超支太多了，試著將冷氣定時以及調高溫度吧</string>
+    <string name="record_summary_electricity_avaiable_rest">您這個月只剩下 %d 度可用</string>
+
 </resources>
