@@ -130,15 +130,19 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_outline) {
             fragment = mFragmentList.get(FRAG_IDX_OUTLINE);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_outline));
+            mFab.setVisibility(View.INVISIBLE);
         } else if (id == R.id.nav_money) {
             fragment = mFragmentList.get(FRAG_IDX_MONEY);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_money));
+            mFab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_electricity) {
             fragment = mFragmentList.get(FRAG_IDX_ELECTRICITY);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_electricity));
+            mFab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_bodyweight) {
             fragment = mFragmentList.get(FRAG_IDX_WEIGHT);
             if (actionBar != null) actionBar.setTitle(getString(R.string.drawer_body_weight));
+            mFab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_share) {
             fragment = null;
             showSnackBarMessage("Share function implementing");
@@ -253,6 +257,7 @@ public class MainActivity extends AppCompatActivity
                     fragment.onFabClick(view);
                 }
             });
+            mFab.setVisibility(View.INVISIBLE);
         }
     }
 
